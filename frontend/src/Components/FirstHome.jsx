@@ -10,23 +10,26 @@ function FirstHome() {
             <div className='p-1 '>
                 {/* <Logo/>
                  */}
-                 <img src={logo} alt="" srcset="" />
+                 <button>
+                    <img src={logo} alt="" srcset="" />
+                 </button>
             </div>
-            <div className=' h-1/2 flex flex-col my-60'>
-                <div className='text-7xl font-courier flex flex-col items-center justify-center'>
+            <div className=' h-1/2 flex flex-col gap-2 my-52'>
+                <div className='text-7xl font-courier flex flex-col items-center my-8 justify-center'>
                     <div>YOUR JOURNEY,</div>
                     <div>SECURED</div>
                 </div>
-                <div className=' flex flex-col items-center justify-center font-courier font-bold'>
-                    <div >We provide top-quality    </div>
-                    <div> motorcycle parts</div>
-                    <div>to help you enhance your ride and ensure peak performance.</div>
+                <div className=' flex flex-col items-center justify-center font-courier gap-1 text-2xl font-bold'>
+                    <div >We provide top-quality motorcycle gears    </div>
+                    <div>to help you enhance your ride and ensure </div>
+                    <div>peak safety and comfort </div>
+
                 </div>
             </div>
         </div>
 
         <div className='   '>
-            <div className='flex absolute gap-9 bg-customColor mx-[525px] z-10 font-courier w-auto my-0 rounded-xl h-12  text-xl font-bold'>
+            <div className='flex absolute gap-9 bg-customColor mx-[525px] z-10 font-courier w-auto my-0 rounded-xl rounded-tl-none h-12  text-xl font-bold'>
                 <button className='mx-2 hover:underline'>SignIn</button>
                 <button className='mx-2 hover:underline'>SignUp</button>
             </div>

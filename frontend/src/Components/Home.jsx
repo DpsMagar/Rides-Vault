@@ -1,10 +1,12 @@
 import React from 'react'
 import FirstHome from './FirstHome'
+import SecondHome from './SecondHome'
 
 function Home() {
   return (
-    <div>
+    <div className=' overflow-hidden'>
       <FirstHome/>
+      <SecondHome/>
     </div>
   )
 }
