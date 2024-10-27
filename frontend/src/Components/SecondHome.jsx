@@ -10,42 +10,65 @@ function SecondHome() {
   return (
     <div className=' h-screen bg-customColor w-screen  overflow-hidden '>
         <hr className="border-t-1 border-black w-full mb-10" />
-        <div className='text-5xl'>
-            <b>What would you like to explore</b>
+        <div className='text-5xl mx-5'>
+            <b>Explore our products:</b>
         </div>
-        <div className=' flex items-center justify-evenly h-52 my-10'>
-            <button>
-                <div className=''>
-                    <img src={helmet} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            <button>
-                <div className=''>
-                    <img src={jacket} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            <button>
-                <div className=''>
-                    <img src={pant} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            <button>
-                <div className=''>
-                    <img src={gloves} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            <button>
-                <div className=''>
-                    <img src={boots} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            <button>
-                <div className=''>
-                    <img src={essentials} alt="" className='h-full w-36' />
-                </div>
-            </button>
-            
-        </div>
+            <div className="flex items-center justify-evenly  h-52 my-10">
+                <button className="relative group p-5">
+                    <div>
+                        <img src={helmet} alt="Helmet" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Helmets
+                    </span>
+                </button>
+
+                <button className="relative group p-5">
+                    <div>
+                        <img src={jacket} alt="Jacket" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Jackets
+                    </span>
+                </button>
+
+                <button className="relative group p-5">
+                    <div>
+                        <img src={pant} alt="Pant" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Pants
+                    </span>
+                </button>
+
+                <button className="relative group p-5">
+                    <div>
+                        <img src={gloves} alt="Gloves" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Gloves
+                    </span>
+                </button>
+
+                <button className="relative group p-5">
+                    <div>
+                        <img src={boots} alt="Boots" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Boots
+                    </span>
+                </button>
+
+                <button className="relative group p-5">
+                    <div>
+                        <img src={essentials} alt="Essentials" className="h-full w-36" />
+                    </div>
+                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      More  Essentials
+                    </span>
+                </button>
+            </div>
+
     </div>
   )
 }
