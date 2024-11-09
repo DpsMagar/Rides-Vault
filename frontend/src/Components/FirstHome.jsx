@@ -11,7 +11,7 @@ function FirstHome() {
                 {/* <Logo/>
                  */}
                  <button>
-                    <img src={logo} alt="" srcset="" />
+                    <img src={logo} alt=""  />
                  </button>
             </div>
             <div className=' h-1/2 flex flex-col gap-2 my-52'>
@@ -35,7 +35,7 @@ function FirstHome() {
             </div>
             
             <div className='mx-32 '>
-                <img src={poster} alt="" srcset="" className='w-full h-[650px] opacity-50 rounded-2xl' />
+                <img src={poster} alt=""  className='w-full h-[650px] opacity-50 rounded-2xl' />
             </div>
         </div>
        
