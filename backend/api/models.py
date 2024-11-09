@@ -49,7 +49,6 @@ class Jacket(models.Model):
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    insulation_type = models.CharField(max_length=50)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='jackets', null=True, blank=True)
     
