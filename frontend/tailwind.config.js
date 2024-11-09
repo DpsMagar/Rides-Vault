@@ -10,6 +10,7 @@ module.exports = {
       },
       fontFamily: {
         courier: ['"Courier New"', 'monospace'], 
+        teko:['Teko', 'sans-serif'],
       },
     },
   },

@@ -5,6 +5,9 @@ import essentials from '../Images/CategoryImages/essentials.png'
 import gloves from '../Images/CategoryImages/gloves.png'
 import jacket from '../Images/CategoryImages/jacket.png'
 import pant from '../Images/CategoryImages/pants.png'
+import ProductList from './Products/ProductList'
+import { Link } from 'react-router-dom'
+
 
 function SecondHome() {
   return (
@@ -15,12 +18,14 @@ function SecondHome() {
         </div>
             <div className="flex items-center justify-evenly  h-52 my-10">
                 <button className="relative group p-5">
-                    <div>
-                        <img src={helmet} alt="Helmet" className="h-full w-36" />
-                    </div>
-                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        Helmets
-                    </span>
+                    <Link to='/list'>
+                        <div>
+                            <img src={helmet} alt="Helmet" className="h-full w-36" />
+                        </div>
+                        <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            Helmets
+                        </span>
+                    </Link>
                 </button>
 
                 <button className="relative group p-5">
