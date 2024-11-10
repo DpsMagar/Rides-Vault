@@ -40,31 +40,31 @@ useEffect(() => {
     
 }, []);
 
-const filteredInfo= data.filter(items=>!excludedKeys.includes(items.key))
-const arrayData
-console.log(data);
+
+const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(items[0]))
+console.log(filteredInfo);
 
 
   return (
     <div className='w-screen h-screen bg-customColor flex overflow-hidden p-5 text-white'>
-        <div>
-            <img src={image} alt="" className='size-[500px] rounded-e-md ' />
+        <div className='mt-44'>
+            <img src={data.image} alt="" className='size-[300px] rounded-e-md ' />
         </div>
-        <div className='mx-14 flex flex-col gap-3'>
+        <div className='mx-40 mt-4 flex flex-col gap-3'>
             <div className='text-5xl'> {data.name}</div> 
             <div className='text-4xl mt-7 '>Rs.{data.price}</div>
             <div className='mt-12'>
                 <div className='pb-4'>Item Specifications</div>
                     
-                    {/* {data.map((items)=>(
+                    {filteredInfo.map((items)=>(
                             <div>
                             <div className='grid grid-cols-2  '>
-                                <div>Brandesf</div>
-                                <div>Ignyte Helmets</div>
+                                <div>{items[0]}</div>
+                                <div>{items[1]}</div>
                             </div>
                             <hr className='mt-2 w-96 opacity-30' />
                         </div>
-                    ))} */}
+                    ))} 
             </div>
             <div className="  rounded-md mx-8 mt-2 mb-10 ">
                 <h2 className="text-2xl  font-bold mb-4 ">Quantity</h2>
@@ -74,12 +74,13 @@ console.log(data);
                     <button onClick={() => setQuantity(qty => qty + 1)} className="px-3 py-1  text-gray-800 text-2xl rounded-md bg-gray-500 "> + </button>
                 </div>
             </div>
-            <div className='flex gap-2'>
+            
+        </div>
+        <div className='flex gap-2 h-12 mt-[300px]'>
                 <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 '>Add to carts</button>
-                <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700'>Add to carts</button>
+                <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'>Buy</button>
                 <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700'><img src={wishlistt} alt="wiahlist" className='size-7' /></button>
             </div>
-        </div>
     </div>
   )
 }
