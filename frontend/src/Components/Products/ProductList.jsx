@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 function ProductList() {
     const[data, setData]= useState([])
     const {state: message}= useLocation();
+    
+    
 
     useEffect(() => {
 
@@ -13,17 +15,17 @@ function ProductList() {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/api/${message}/`);
                 setData(response.data);
-                console.log(response.data);
                 
             } catch (error) {
                 console.log(error);
             }
-        };
-        console.log(message);
-        
+        };        
     
         fetchData();
     }, [message]);
+    
+    console.log(data);
+    
     
 
   return (
@@ -34,7 +36,7 @@ function ProductList() {
 
             {data.map((item)=>(
                 <>
-                <Link to={`/${message}/details`}>
+                <Link to={`/${message}/details`} state={item.id}>
                     <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center shadow-lg hover:shadow-md hover:shadow-yellow-800'>
                         <div className='size-44 mx-auto'>
                             <img src={item.image} alt="" />

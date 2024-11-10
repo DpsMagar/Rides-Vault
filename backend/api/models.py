@@ -5,10 +5,11 @@ class Helmet(models.Model):
     brand = models.CharField(max_length=100)
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(default=0)
     safety_rating = models.CharField(max_length=50)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='helmets', null=True, blank=True)
+    
     def __str__(self):
         return f"{self.brand} Helmet ({self.size})"
 
@@ -18,11 +19,10 @@ class Boot(models.Model):
     brand = models.CharField(max_length=100)
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(default=0)
     waterproof = models.BooleanField(default=False)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='boots', null=True, blank=True)
-    
 
     def __str__(self):
         return f"{self.brand} Boot ({self.size})"
@@ -33,7 +33,7 @@ class Pants(models.Model):
     brand = models.CharField(max_length=100)
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(default=0)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='Pants', null=True, blank=True)
     
@@ -47,7 +47,7 @@ class Jacket(models.Model):
     brand = models.CharField(max_length=100)
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(default=0)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='jackets', null=True, blank=True)
     
@@ -61,7 +61,7 @@ class Glove(models.Model):
     brand = models.CharField(max_length=100)
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField(default=0)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='gloves', null=True, blank=True)
     
