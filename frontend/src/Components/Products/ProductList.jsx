@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import mtThunder from '../../Images/Helmets/MT Thunder 3.png'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
@@ -34,12 +34,14 @@ function ProductList() {
 
             {data.map((item)=>(
                 <>
-                    <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center'>
-                        <div className='size-48 mx-auto'>
+                <Link to={`/${message}/details`}>
+                    <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center shadow-lg hover:shadow-md hover:shadow-yellow-800'>
+                        <div className='size-44 mx-auto'>
                             <img src={item.image} alt="" />
                         </div >
-                        <span className='w-auto mx-auto'>{item.name}</span>
+                        <span className='text-gray-500 w-auto mx-auto'>{item.name}</span>
                     </div>
+                </Link>
                 </>
             ))}
         </div>

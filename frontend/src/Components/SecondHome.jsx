@@ -17,7 +17,7 @@ function SecondHome() {
         </div>
             <div className="flex items-center justify-evenly  h-52 my-10">
                 <button className="relative group p-5">
-                    <Link to='/list' state="helmet">
+                    <Link to='/helmet' state="helmet">
                         <div>
                             <img src={helmet} alt="Helmet" className="h-full w-36" />
                         </div>
@@ -28,7 +28,7 @@ function SecondHome() {
                 </button>
 
                 <button className="relative group p-5">
-                    <Link to='/list' state="jacket">
+                    <Link to='/jacket' state="jacket">
                         <div>
                             <img src={jacket} alt="Jacket" className="h-full w-36" />
                         </div>
@@ -39,7 +39,7 @@ function SecondHome() {
                 </button>
 
                 <button className="relative group p-5">
-                    <Link to='/list' state="pant">
+                    <Link to='/pant' state="pant">
                         <div>
                             <img src={pant} alt="pant" className="h-full w-36" />
                         </div>
@@ -50,7 +50,7 @@ function SecondHome() {
                 </button>
 
                 <button className="relative group p-5">
-                    <Link to='/list' state="glove">
+                    <Link to='/glove' state="glove">
                         <div>
                             <img src={gloves} alt="gloves" className="h-full w-36" />
                         </div>
@@ -61,7 +61,7 @@ function SecondHome() {
                 </button>
 
                 <button className="relative group p-5">
-                    <Link to='/list' state="boot">
+                    <Link to='/boots' state="boot">
                         <div>
                             <img src={boots} alt="boot" className="h-full w-36" />
                         </div>
@@ -72,12 +72,14 @@ function SecondHome() {
                 </button>
 
                 <button className="relative group p-5">
-                    <div>
-                        <img src={essentials} alt="Essentials" className="h-full w-36" />
-                    </div>
-                    <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      More  Essentials
-                    </span>
+                    <Link to='/essentials' state="essential">
+                        <div>
+                            <img src={essentials} alt="essentials" className="h-full w-36" />
+                        </div>
+                        <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            More Essentials
+                        </span>
+                    </Link>
                 </button>
             </div>
 

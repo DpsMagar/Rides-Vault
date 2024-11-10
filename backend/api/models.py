@@ -34,7 +34,6 @@ class Pants(models.Model):
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    material = models.CharField(max_length=100)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='Pants', null=True, blank=True)
     
@@ -63,7 +62,6 @@ class Glove(models.Model):
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    grip_type = models.CharField(max_length=50)
     stock_quantity = models.PositiveIntegerField()
     image=models.ImageField(upload_to='gloves', null=True, blank=True)
     
