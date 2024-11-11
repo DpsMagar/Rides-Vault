@@ -7,7 +7,7 @@ import jacket from '../Images/CategoryImages/jacket.png'
 import pant from '../Images/CategoryImages/pants.png'
 import { Link } from 'react-router-dom'
 
-
+   
 function SecondHome() {
   return (
     <div className=' h-screen bg-customColor w-screen  overflow-hidden '>

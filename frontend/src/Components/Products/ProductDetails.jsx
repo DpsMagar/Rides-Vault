@@ -5,7 +5,7 @@ import wishlistt from '../../Images/icons8-heart-96.png'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom';
-
+import { toast } from 'react-toastify'
 
 
 function ProductDetails() {
@@ -59,7 +59,7 @@ console.log(filteredInfo);
                     {filteredInfo.map((items)=>(
                             <div>
                             <div className='grid grid-cols-2  '>
-                                <div>{items[0]}</div>
+                                <div>{items[0].charAt(0).toUpperCase() + items[0].slice(1)}</div>
                                 <div>{items[1]}</div>
                             </div>
                             <hr className='mt-2 w-96 opacity-30' />
@@ -77,7 +77,19 @@ console.log(filteredInfo);
             
         </div>
         <div className='flex gap-2 h-12 mt-[300px]'>
-                <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 '>Add to carts</button>
+                <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 ' onClick={()=>toast.success("Added Successfully",{
+                    style: {
+                        backgroundColor: "#52281c", 
+                        color: "white", 
+                        fontSize: "16px", 
+                        padding: "12px 24px", 
+                        borderRadius: "8px", 
+                      },
+                      icon: <span role="img" aria-label="cart">🛒</span>, 
+                      progressStyle: {
+                        backgroundColor: "#4a281e", 
+                      },
+                })}>Add to carts</button>
                 <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'>Buy</button>
                 <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700'><img src={wishlistt} alt="wiahlist" className='size-7' /></button>
             </div>
