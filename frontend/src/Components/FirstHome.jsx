@@ -1,7 +1,8 @@
 import React from 'react'
 import Logo from './Logo'
 import poster from '../Images/poster.jpg'
-import logo from '../Images/logo1.png'
+import logo from '../Images/PrimaryLogo.png'
+import { Link } from 'react-router-dom'
 
 function FirstHome() {
   return (
@@ -11,7 +12,7 @@ function FirstHome() {
                 {/* <Logo/>
                  */}
                  <button>
-                    <img src={logo} alt=""  />
+                    <img src={logo} alt=""  className='size-20 mx-2'/>
                  </button>
             </div>
             <div className=' h-1/2 flex flex-col gap-2 my-52'>
@@ -30,8 +31,12 @@ function FirstHome() {
 
         <div className='   '>
             <div className='flex absolute gap-9 bg-customColor mx-[525px] z-10 font-courier w-auto my-0 rounded-xl rounded-tl-none h-12  text-xl font-bold'>
-                <button className='mx-2 hover:underline'>SignIn</button>
-                <button className='mx-2 hover:underline'>SignUp</button>
+                <Link to="/user/login">
+                    <button className="mx-2 hover:underline">SignIn</button>
+                </Link>
+                <Link to="/user/register">
+                    <button className="mx-2 hover:underline">SignUp</button>
+                </Link>
             </div>
             
             <div className='mx-32 '>
