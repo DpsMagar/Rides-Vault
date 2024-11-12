@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import HelmetViewSet, BootViewSet, PantsViewSet, JacketViewSet, GloveViewSet
+from .views import HelmetViewSet, BootViewSet, PantsViewSet, JacketViewSet, GloveViewSet, RegisterView, LoginView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
     # Helmet URLs
@@ -21,4 +23,11 @@ urlpatterns = [
     # Glove URLs
     path('glove/', GloveViewSet.as_view({'get': 'list', 'post': 'create'}), name='glove-list'),
     path('glove/<int:pk>/', GloveViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='glove-detail'),
+    
+    #For the authentication
+    path('token', TokenObtainPairView.as_view(),name='token_obtain_pair'),
+    path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
 ]

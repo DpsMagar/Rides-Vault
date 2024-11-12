@@ -16,7 +16,7 @@ const SignIn = () => {
             </p>
             <p className="mt-6 text-center font-medium md:text-left">Sign in to your account below.</p>
   
-            <form className="flex flex-col items-stretch pt-3 md:pt-8">
+          <form className="flex flex-col items-stretch pt-3 md:pt-8">
               <div className="flex flex-col pt-4">
                 <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                   <input
