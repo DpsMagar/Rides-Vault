@@ -1,34 +1,63 @@
 from rest_framework import serializers
 from .models import Helmet, Boot, Pants, Jacket, Glove
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.exceptions import ValidationError
 
-
-User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model= User
-        fields= ('id', 'username', 'email', 'password')
-        extra_kwargs= {'password':{'write_only': True}}
-    
+        model = User
+        fields = ('id', 'username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
     def create(self, validated_data):
-        user = User.objects.create_user(
+        # Check if email already exists
+        if User.objects.filter(email=validated_data['email']).exists():
+            raise ValidationError({"email": "This email is already registered."})
+        
+        # Check if username already exists
+        if User.objects.filter(username=validated_data['username']).exists():
+            raise ValidationError({"username": "This username is already taken."})
+
+        return User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password']
         )
-        return user
+    
+    def validate_username(self, value):
+        # Simple check for username length
+        if len(value) < 5:
+            raise serializers.ValidationError("Username must be at least 5 characters long.")
+        return value
+
+    def validate_email(self, value):
+        # Basic email check (you can improve this for more complex validation)
+        if '@' not in value:
+            raise serializers.ValidationError("Please provide a valid email address.")
+        return value
     
 class LoginSerializer(serializers.Serializer):
-    username= serializers.CharField()
-    password= serializers.CharField(write_only= True)
-    
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
     def validate(self, data):
-        user= authenticate(**data)
-        if user and user.is_active:
-            return user
-        return serializers.ValidationError("Invalid Credentials")
+        email = data.get("email")
+        password = data.get("password")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User with this email does not exist.")
+
+        user = authenticate(username=user.username, password=password)
+
+        if user is None:
+            raise serializers.ValidationError("Invalid email or password.")
+        
+        data["user"] = user
+        return data
 
 class HelmetSerializer(serializers.ModelSerializer):
     class Meta:

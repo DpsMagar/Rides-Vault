@@ -1,8 +1,45 @@
-import poster from '../../Images/poster.jpg'
 import logo from '../../Images/PrimaryLogo.png'
 import gif from '../../Gif/flying-saucer-2949.gif'
+import axios from 'axios'
+
+
+import { useState } from 'react';
 
 const SignIn = () => {
+
+    const [ email, setEmail ] = useState('')
+    const [ password , setPassword]= useState('')
+    const [error , setError]= useState('')
+
+    const handleSubmit= async (e)=>{
+      e.preventDefault();
+      try{
+          const response= await axios.post('http://127.0.0.1:8000/api/login/',{
+            email: email,
+            password: password
+          })
+          const {refresh, access}= response.data;
+          localStorage.setItem("acessToken",access)
+          localStorage.setItem("refreshToken",refresh)
+          console.log("Logged in successfully");
+          
+
+      }
+      catch (err) {         
+        if (err.response) {
+            console.error('Error response:', err.response);
+            if (err.response.data) {
+                setError(err.response.data.detail || 'Invalid credentials');
+            } else {
+                setError('Invalid credentials');
+            }
+        } else {
+            console.error('Error:', err.message);
+            setError('Something went wrong. Please try again.');
+        }
+    }
+
+    }   
     return (
       <div className="flex w-screen flex-wrap text-slate-800 bg-[#855E40]">
         <div className="flex w-full flex-col md:w-1/2">
@@ -16,7 +53,7 @@ const SignIn = () => {
             </p>
             <p className="mt-6 text-center font-medium md:text-left">Sign in to your account below.</p>
   
-          <form className="flex flex-col items-stretch pt-3 md:pt-8">
+          <form className="flex flex-col items-stretch pt-3 md:pt-8" onSubmit={handleSubmit}>
               <div className="flex flex-col pt-4">
                 <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                   <input
@@ -24,6 +61,8 @@ const SignIn = () => {
                     id="login-email"
                     className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700  focus:outline-none"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -34,6 +73,8 @@ const SignIn = () => {
                     id="login-password"
                     className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
                   />
                 </div>
               </div>
