@@ -2,15 +2,38 @@ import React from "react";
 import logo from '../../Images/PrimaryLogo.png'
 import google from '../../Images/google.png'
 import gif from '../../Gif/wind-4737_512.gif'
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit= async (e)=>{
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/register/',{
+        username: name,
+        email:email,
+        password:password
+      })
+      console.log("Successful");
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   return (
     <div className="flex w-screen flex-wrap text-slate-800 bg-[#7c503a]">
      
       <div className="flex w-full flex-col md:w-1/2">
         <div className="flex justify-center pt-12 md:justify-start md:pl-12">
-          <a href="#" className="text-2xl font-bold text-blue-600">
-            <img src={logo} alt="" />
+          <a className="text-2xl font-bold text-blue-600">
+            <Link to='/'><img src={logo} alt="" /></Link>
           </a>
         </div>
         <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
@@ -29,14 +52,16 @@ const SignUp = () => {
               Or use email instead
             </div>
           </div>
-          <form className="flex flex-col items-stretch pt-3 md:pt-8">
+          <form className="flex flex-col items-stretch pt-3 md:pt-8" onSubmit={handleSubmit}>
             <div className="flex flex-col pt-4">
               <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
                 <input
                   type="text"
                   id="login-name"
+                  value={name}
+                  onChange={(e)=>setName(e.target.value)}
                   className="w-full flex-shrink appearance-none border-gray-300 bg-orange-200  py-2 px-4 text-base text-black placeholder-black focus:outline-none"
-                  placeholder="Name"
+                  placeholder="Full Name"
                 />
               </div>
             </div>
@@ -45,6 +70,8 @@ const SignUp = () => {
                 <input
                   type="email"
                   id="login-email"
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
                   className="w-full flex-shrink appearance-none border-gray-300 bg-orange-200  py-2 px-4 text-base text-black placeholder-black focus:outline-none"
                   placeholder="Email"
                 />
@@ -55,6 +82,8 @@ const SignUp = () => {
                 <input
                   type="password"
                   id="login-password"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
                   className="w-full flex-shrink appearance-none border-gray-300 bg-orange-200  py-2 px-4 text-base text-black placeholder-black focus:outline-none"
                   placeholder="Password (minimum 8 characters)"
                 />

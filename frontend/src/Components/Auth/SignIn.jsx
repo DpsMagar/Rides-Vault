@@ -1,6 +1,7 @@
 import logo from '../../Images/PrimaryLogo.png'
 import gif from '../../Gif/flying-saucer-2949.gif'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 
 import { useState } from 'react';
@@ -44,7 +45,9 @@ const SignIn = () => {
       <div className="flex w-screen flex-wrap text-slate-800 bg-[#855E40]">
         <div className="flex w-full flex-col md:w-1/2">
           <div className="flex justify-center pt-12 md:justify-start md:pl-12">
-            <img src={logo} alt="" />
+            <Link to='/'>
+              <img src={logo} alt="" />
+            </Link>
           </div>
           <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
             <p className="text-center text-3xl font-bold md:leading-tight md:text-left md:text-5xl">
@@ -59,7 +62,7 @@ const SignIn = () => {
                   <input
                     type="email"
                     id="login-email"
-                    className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700  focus:outline-none"
+                    className="w-full flex-shrink appearance-none border-gray-300 bg-slate-200 py-2 px-4 text-base text-gray-700  focus:outline-none"
                     placeholder="Email"
                     value={email}
                     onChange={(e)=>setEmail(e.target.value)}
@@ -71,7 +74,7 @@ const SignIn = () => {
                   <input
                     type="password"
                     id="login-password"
-                    className="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
+                    className="w-full flex-shrink appearance-none border-gray-300 bg-slate-200 py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
                     placeholder="Password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}

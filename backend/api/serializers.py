@@ -12,11 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        # Check if email already exists
         if User.objects.filter(email=validated_data['email']).exists():
             raise ValidationError({"email": "This email is already registered."})
         
-        # Check if username already exists
         if User.objects.filter(username=validated_data['username']).exists():
             raise ValidationError({"username": "This username is already taken."})
 
@@ -27,13 +25,11 @@ class UserSerializer(serializers.ModelSerializer):
         )
     
     def validate_username(self, value):
-        # Simple check for username length
         if len(value) < 5:
             raise serializers.ValidationError("Username must be at least 5 characters long.")
         return value
 
     def validate_email(self, value):
-        # Basic email check (you can improve this for more complex validation)
         if '@' not in value:
             raise serializers.ValidationError("Please provide a valid email address.")
         return value
