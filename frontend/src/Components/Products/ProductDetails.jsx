@@ -7,13 +7,14 @@ import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
-
+import logo from '../../Images/PrimaryLogo.png'
+import { Link } from 'react-router-dom'
 
 function ProductDetails() {
 const [quantity, setQuantity] = useState(0);
 const [data, setData] = useState([])
-const {state: id}= useLocation();
+// const {state: id}= useLocation();
+const id=localStorage.getItem('id')
 const navigate = useNavigate();
 
 
@@ -53,6 +54,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
 
   return (
     <div className='w-screen h-screen bg-customColor flex overflow-hidden p-5 text-white'>
+        <Link to='/'> <img src={logo} alt="" className='absolute'/> </Link>
         <div className='mt-44'>
             <img src={data.image} alt="" className='size-[300px] rounded-e-md ' />
         </div>
@@ -63,7 +65,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                 <div className='pb-4'>Item Specifications</div>
                     
                     {filteredInfo.map((items)=>(
-                            <div>
+                            <div key={items[0]}>
                             <div className='grid grid-cols-2  '>
                                 <div>{items[0].charAt(0).toUpperCase() + items[0].slice(1)}</div>
                                 <div>{items[1]}</div>

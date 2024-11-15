@@ -1,5 +1,5 @@
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 
 class Helmet(models.Model):
@@ -70,3 +70,16 @@ class Glove(models.Model):
 
     def __str__(self):
         return f"{self.brand} Glove ({self.size})"
+
+class Cart(models.Model):
+    user= models.ForeignKey(User,on_delete=models.CASCADE, related_name='cart_items')
+    name= models.CharField(max_length=40)
+    quantity= models.IntegerField(default=1)
+    item_type= models.CharField(max_length=50)
+    price= models.IntegerField()
+    added_at= models.DateField(auto_now_add=True)
+    
+    def totalPrice(self):
+        pass
+
+    

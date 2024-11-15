@@ -1,11 +1,12 @@
 import logo from '../../Images/PrimaryLogo.png'
 import gif from '../../Gif/flying-saucer-2949.gif'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUsername } from '../Store/userSlice';
+import { useLocation } from 'react-router-dom';
 
-  
+
 import { useState } from 'react';
 
 const SignIn = () => {
@@ -14,6 +15,10 @@ const SignIn = () => {
     const [ password , setPassword]= useState('')
     const [error , setError]= useState('')
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const location= useLocation();
+    const from = location.state?.from || '/'
+    
 
     const handleSubmit= async (e)=>{
       e.preventDefault();
@@ -29,6 +34,7 @@ const SignIn = () => {
           localStorage.setItem("refreshToken",refresh)
           console.log("Logged in successfully");
           dispatch(setUsername(name))
+          navigate(from)
           
 
       }
