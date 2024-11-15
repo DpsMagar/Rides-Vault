@@ -2,8 +2,10 @@ import logo from '../../Images/PrimaryLogo.png'
 import gif from '../../Gif/flying-saucer-2949.gif'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUsername } from '../Store/userSlice';
 
-
+  
 import { useState } from 'react';
 
 const SignIn = () => {
@@ -11,6 +13,7 @@ const SignIn = () => {
     const [ email, setEmail ] = useState('')
     const [ password , setPassword]= useState('')
     const [error , setError]= useState('')
+    const dispatch = useDispatch();
 
     const handleSubmit= async (e)=>{
       e.preventDefault();
@@ -19,10 +22,13 @@ const SignIn = () => {
             email: email,
             password: password
           })
-          const {refresh, access}= response.data;
+          console.log(response);
+          
+          const {refresh, access, name}= response.data;
           localStorage.setItem("acessToken",access)
           localStorage.setItem("refreshToken",refresh)
           console.log("Logged in successfully");
+          dispatch(setUsername(name))
           
 
       }

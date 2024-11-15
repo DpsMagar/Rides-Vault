@@ -24,7 +24,6 @@ function ProductList() {
         fetchData();
     }, [message]);
     
-    console.log(data);
     
     
 

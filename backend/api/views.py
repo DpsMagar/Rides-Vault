@@ -22,6 +22,7 @@ class LoginView(generics.GenericAPIView):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'name': user.username,
         })
         
 class HelmetViewSet(viewsets.ModelViewSet):

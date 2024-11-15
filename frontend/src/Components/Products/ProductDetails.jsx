@@ -4,20 +4,25 @@ import wishlist from '../../Images/icons8-heart-100 (1).png'
 import wishlistt from '../../Images/icons8-heart-96.png'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
 
 function ProductDetails() {
 const [quantity, setQuantity] = useState(0);
 const [data, setData] = useState([])
 const {state: id}= useLocation();
+const navigate = useNavigate();
 
 
 const location = useLocation();
 const pathsegments= location.pathname.split('/')
 
 const excludedKeys = ['id','price','name','image']
+
+const userName= useSelector((state)=> state.user.userName);
 
 
 
@@ -29,6 +34,7 @@ useEffect(() => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/${pathsegments[1]}/${id}`);
             setData(response.data);
+            // console.log(location.pathname);
             
             
         } catch (error) {
@@ -42,7 +48,7 @@ useEffect(() => {
 
 
 const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(items[0]))
-console.log(filteredInfo);
+// console.log(filteredInfo);
 
 
   return (
@@ -77,10 +83,13 @@ console.log(filteredInfo);
             
         </div>
         <div className='flex gap-2 h-12 mt-[300px]'>
-                <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 ' onClick={()=>toast.success("Added Successfully",{
+                <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 ' onClick={
+                    ()=>
+                    userName?
+                    toast.success("Added Successfully",{
                     style: {
                         backgroundColor: "#52281c", 
-                        color: "white", 
+                        color: "white",     
                         fontSize: "16px", 
                         padding: "12px 24px", 
                         borderRadius: "8px", 
@@ -89,9 +98,35 @@ console.log(filteredInfo);
                       progressStyle: {
                         backgroundColor: "#4a281e", 
                       },
-                })}>Add to carts</button>
-                <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'>Buy</button>
-                <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700'><img src={wishlistt} alt="wiahlist" className='size-7' /></button>
+                }):
+                navigate('/user/login',{state:{from:location.pathname}})
+                }>Add to carts</button>
+                <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'
+                onClick={
+                    ()=>
+                    userName?
+                    navigate('/user/cart'):
+                navigate('/user/login',{state:{from:location.pathname}})
+                }>Buy</button>
+                <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700' 
+                onClick={
+                    ()=>
+                    userName?
+                    toast.success("Added to Wishlist",{
+                    style: {
+                        backgroundColor: "#52281c", 
+                        color: "white",     
+                        fontSize: "16px", 
+                        padding: "12px 24px", 
+                        borderRadius: "8px", 
+                      },
+                      icon: <span role="img" aria-label="cart">♡</span>, 
+                      progressStyle: {
+                        backgroundColor: "#4a281e", 
+                      },
+                }):
+                navigate('/user/login',{state:{from:location.pathname}})
+                }><img src={wishlistt} alt="wishlist" className='size-7' /></button>
             </div>
     </div>
   )
