@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Helmet, Boot, Pants, Jacket, Glove
+from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import ValidationError
@@ -83,3 +83,20 @@ class GloveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Glove
         fields = '__all__'
+        
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'added_at', 'total_price']
+        read_only_fields = ['total_price']
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at']
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bookmarks
+        fields = ['id', 'user', 'item_type', 'name', 'price', 'image', 'bookmarked_at']
+        

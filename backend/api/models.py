@@ -78,8 +78,32 @@ class Cart(models.Model):
     item_type= models.CharField(max_length=50)
     price= models.IntegerField()
     added_at= models.DateField(auto_now_add=True)
-    
-    def totalPrice(self):
-        pass
+    total_price= models.IntegerField()
+    image = models.ImageField(upload_to='cart_items', null=True, blank=True)
 
     
+    def save(self, *args, **kwargs):
+        self.total_price = self.price * self.quantity
+        super().save(*args, **kwargs)
+        
+#for later use(using the invoices)
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    item_type = models.CharField(max_length=50)  
+    item_id = models.PositiveIntegerField()  
+    quantity = models.PositiveIntegerField()
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    ordered_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='order_items', null=True, blank=True)
+
+    
+class Bookmarks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+    item_type = models.CharField(max_length=50)  
+    item_id = models.PositiveIntegerField()  
+    bookmarked_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='bookmarked_items', null=True, blank=True)
+
+
+    def __str__(self):
+        return f"{self.user.username}'s Bookmark - {self.item_type} ID {self.item_id}"

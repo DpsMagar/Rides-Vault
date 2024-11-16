@@ -27,8 +27,6 @@ const userName= useSelector((state)=> state.user.userName);
 
 
 
-
-
 useEffect(() => {
 
     const fetchData = async () => {

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Helmet, Boot, Pants, Jacket, Glove
-from .serializers import HelmetSerializer, BootSerializer, PantsSerializer, JacketSerializer, GloveSerializer, UserSerializer, LoginSerializer
+from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order
+from .serializers import HelmetSerializer, BootSerializer, PantsSerializer, JacketSerializer, GloveSerializer, UserSerializer, LoginSerializer, BookmarkSerializer, CartSerializer, OrderSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -24,6 +24,40 @@ class LoginView(generics.GenericAPIView):
             'access': str(refresh.access_token),
             'name': user.username,
         })
+        
+class BookmarkViewSet(viewsets.ModelViewSet):
+    queryset = Bookmarks.objects.all()
+    serializer_class = BookmarkSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Bookmarks.objects.filter(user=user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
         
 class HelmetViewSet(viewsets.ModelViewSet):
     queryset = Helmet.objects.all()
