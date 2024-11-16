@@ -11,7 +11,8 @@ import logo from '../../Images/PrimaryLogo.png'
 import { Link } from 'react-router-dom'
 
 function ProductDetails() {
-const [quantity, setQuantity] = useState(0);
+const [quantity, setQuantity] = useState(1);
+const [price, setPrice]= useState(0)
 const [data, setData] = useState([])
 // const {state: id}= useLocation();
 const id=localStorage.getItem('id')
@@ -33,7 +34,8 @@ useEffect(() => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/${pathsegments[1]}/${id}`);
             setData(response.data);
-            // console.log(location.pathname);
+            setPrice(response.data.price)            
+            console.log(response.data.image);
             
             
         } catch (error) {
@@ -44,6 +46,26 @@ useEffect(() => {
     fetchData();
     
 }, []);
+
+const handleCart= async ()=>{
+    try {
+        await axios.post('http://127.0.0.1:8000/api/cart/',{
+            name:data.name,
+            quantity:quantity,
+            item_type: pathsegments[1],
+            price:price,
+            image:data.image
+        },{
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
+        }})
+        console.log('added');
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
 
 
 const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(items[0]))
@@ -86,19 +108,21 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                 <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 ' onClick={
                     ()=>
                     userName?
-                    toast.success("Added Successfully",{
-                    style: {
-                        backgroundColor: "#52281c", 
-                        color: "white",     
-                        fontSize: "16px", 
-                        padding: "12px 24px", 
-                        borderRadius: "8px", 
-                      },
-                      icon: <span role="img" aria-label="cart">🛒</span>, 
-                      progressStyle: {
-                        backgroundColor: "#4a281e", 
-                      },
-                }):
+                        (handleCart(),
+                        toast.success("Added Successfully",{
+                            style: {
+                                backgroundColor: "#52281c", 
+                                color: "white",     
+                                fontSize: "16px", 
+                                padding: "12px 24px", 
+                                borderRadius: "8px", 
+                            },
+                            icon: <span role="img" aria-label="cart">🛒</span>, 
+                            progressStyle: {
+                                backgroundColor: "#4a281e", 
+                            },
+                        })):
+                    
                 navigate('/user/login',{state:{from:location.pathname}})
                 }>Add to carts</button>
                 <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'

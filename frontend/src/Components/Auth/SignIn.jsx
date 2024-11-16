@@ -30,7 +30,7 @@ const SignIn = () => {
           console.log(response);
           
           const {refresh, access, name}= response.data;
-          localStorage.setItem("acessToken",access)
+          localStorage.setItem("accessToken",access)
           localStorage.setItem("refreshToken",refresh)
           console.log("Logged in successfully");
           dispatch(setUsername(name))

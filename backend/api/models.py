@@ -79,7 +79,8 @@ class Cart(models.Model):
     price= models.IntegerField()
     added_at= models.DateField(auto_now_add=True)
     total_price= models.IntegerField()
-    image = models.ImageField(upload_to='cart_items', null=True, blank=True)
+    image = models.URLField()
+    # image = models.ImageField(upload_to='cart_items', null=True, blank=True)
 
     
     def save(self, *args, **kwargs):
