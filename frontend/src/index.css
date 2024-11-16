@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.my-scrollable-container::-webkit-scrollbar {
+    width: 12px; /* Width of the vertical scrollbar */
+  }
+  
+  .my-scrollable-container::-webkit-scrollbar-track {
+    background: #4C2B21; /* Color of the track */
+  }
+  
+  .my-scrollable-container::-webkit-scrollbar-thumb {
+    background: #4C2B21; /* Color of the thumb */
+    border-radius: 10px; /* Rounded corners for the thumb */
+  }
+  
+  .my-scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #4C2B21; /* Darker thumb color when hovered */
+  }
+  
+  /* For Firefox support (optional) */
+  .my-scrollable-container {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: #4C2B21 #723838; /* Thumb and track color */
+  }

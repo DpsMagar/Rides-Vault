@@ -1,11 +1,12 @@
 from rest_framework import viewsets
 from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order
 from .serializers import HelmetSerializer, BootSerializer, PantsSerializer, JacketSerializer, GloveSerializer, UserSerializer, LoginSerializer, BookmarkSerializer, CartSerializer, OrderSerializer
-from rest_framework import generics, status
+from rest_framework import generics, status, serializers
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db.models import F
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -43,11 +44,32 @@ class CartViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        # Ensure only the authenticated user's cart items are visible
         return Cart.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        data = self.request.data
+        name = data.get('name')
+        item_type = data.get('item_type')
 
+        # Check if the item already exists for this user
+        existing_cart_item = Cart.objects.filter(user=user, name=name, item_type=item_type).first()
+
+        if existing_cart_item:
+            # Update the quantity of the existing item
+            existing_cart_item.quantity = F('quantity') + data.get('quantity', 1)  # Default to 1 if quantity is not sent
+            existing_cart_item.save()
+            existing_cart_item.refresh_from_db()  # Refresh to get the updated quantity
+
+            # Return a custom response indicating that the item was updated
+            return Response({
+                "message": "Item quantity updated successfully!",
+                "cart_item": CartSerializer(existing_cart_item).data
+            }, status=status.HTTP_200_OK)
+
+        # If the item doesn't exist, save a new cart item
+        serializer.save(user=user)
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer

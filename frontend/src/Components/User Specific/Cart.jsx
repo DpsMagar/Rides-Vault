@@ -1,8 +1,34 @@
 import React from 'react';
 import logo from '../../Images/PrimaryLogo.png'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 
 function Cart() {
+  const[data, setData]= useState([])
+  const[totalPrice, setTotalPrice]= useState(0)
+
+useEffect(()=>{
+    const fetch= async ()=>{
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/cart/',{
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
+          }
+        })
+        console.log(response.data);
+        
+        setData(response.data)
+
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+    fetch();
+},[])
+
   return (
     <section className="h-screen bg-customColor   ">
       <Link to='/'> <img src={logo} alt="" className='absolute p-6'/> </Link>
@@ -15,60 +41,37 @@ function Cart() {
           <div className="rounded-3xl bg-white shadow-lg">
             <div className="px-4 py-6 sm:px-8 sm:py-10 bg-[#723838] rounded-xl">
               <div className="flow-root">
-                <ul className="-my-8">
-                  <li className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
-                    <div className="shrink-0 relative">
-                      <span className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-full border bg-customColor text-sm font-medium text-white shadow sm:-top-2 sm:-right-2">1</span>
-                      <img className="h-24 w-24 max-w-full rounded-lg object-cover" src="https://images.unsplash.com/photo-1588484628369-dd7a85bfdc38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHNuZWFrZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=150&q=60" alt="" />
-                    </div>
-
-                    <div className="relative flex flex-1 flex-col justify-between">
-                      <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
-                        <div className="pr-8 sm:pr-5">
-                          <p className="text-base font-semibold text-gray-900">Nike Air Max 2019</p>
-                          <p className="mx-0 mt-1 mb-0 text-sm text-black">36EU - 4US</p>
-                        </div>
-
-                        <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                          <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">$1259.00</p>
-                        </div>
+                <ul className="-my-8 h-[288px] overflow-auto my-scrollable-container w-[415px]">
+                  
+                  {data && data.map((item)=>(
+                      <li className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
+                      <div className="shrink-0 relative">
+                        <span className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-full border bg-customColor text-sm font-medium text-white shadow sm:-top-2 sm:-right-2">{item.quantity}</span>
+                        <img className="h-24 w-24 max-w-full rounded-lg object-cover" src={item.image} alt="" />
                       </div>
-
-                      <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
-                        <button type="button" className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900">
-                        ❌
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
-                    <div className="shrink-0 relative">
-                      <span className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-full border bg-white text-sm font-medium text-gray-500 shadow sm:-top-2 sm:-right-2">2</span>
-                      <img className="h-24 w-24 max-w-full rounded-lg object-cover" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=150&q=60" alt="" />
-                    </div>
-
-                    <div className="relative flex flex-1 flex-col justify-between">
-                      <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
-                        <div className="pr-8 sm:pr-5">
-                          <p className="text-base font-semibold text-gray-900">Nike Air Max 2019</p>
-                          <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">36EU - 4US</p>
+  
+                      <div className="relative flex flex-1 flex-col justify-between">
+                        <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
+                          <div className="pr-8 sm:pr-5">
+                            <p className="text-base font-semibold text-gray-900">{item.name}</p>
+                            <p className="mx-0 mt-1 mb-0 text-sm text-black">{item.item_type}</p>
+                          </div>
+  
+                          <div className="mt-4 flex mx-4 items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                            <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">RS.{item.price}</p>
+                          </div>
                         </div>
-
-                        <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                          <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">$1259.00</p>
+  
+                        <div className="absolute mx-4 top-0 right-0 flex sm:bottom-0 sm:top-auto">
+                          <button type="button" className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900">
+                          ❌
+                          </button>
                         </div>
                       </div>
+                    </li>
+                  ) )}
 
-                      <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
-                        <button type="button" className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900">
-                          <svg className="block h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </li>
+                  
                 </ul>
               </div>
 
