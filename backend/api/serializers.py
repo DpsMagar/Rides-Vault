@@ -93,7 +93,8 @@ class CartSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at']
+        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number']
+        read_only_fields = ['order_number']
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:

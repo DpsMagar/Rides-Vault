@@ -10,6 +10,7 @@ import Cart from './Components/User Specific/Cart';
 import SignIn from './Components/Auth/SignIn';
 import SignUp from './Components/Auth/SignUp';
 import LogOut from './Components/Auth/LogOut';
+import Invoice from './Components/User Specific/Invoice';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/user/register' element={<SignUp />} />
         <Route path='/user/logout' element={<LogOut />} />
         <Route path='/user/login' element={<SignIn />} />
+        <Route path='/user/invoice' element={<Invoice />} />
       </Routes>
     </Router>
   )

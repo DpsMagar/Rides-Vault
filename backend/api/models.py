@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import random
+import string
 
 
 class Helmet(models.Model):
@@ -88,14 +90,22 @@ class Cart(models.Model):
         super().save(*args, **kwargs)
         
 #for later use(using the invoices)
+def generate_order_number():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    item_type = models.CharField(max_length=50)  
+    item_type = models.CharField(max_length=50)     
     item_id = models.PositiveIntegerField()  
     quantity = models.PositiveIntegerField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     ordered_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='order_items', null=True, blank=True)
+    
+    order_number = models.CharField(max_length=5, default=generate_order_number, unique=True)
+
+    def __str__(self):
+        return self.order_number
 
     
 class Bookmarks(models.Model):
