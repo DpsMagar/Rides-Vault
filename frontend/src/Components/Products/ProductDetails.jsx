@@ -129,9 +129,9 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                 onClick={
                     ()=>
                     userName?
-                    navigate('/user/cart'):
-                navigate('/user/login',{state:{from:location.pathname}})
-                }>Buy</button>
+                    (handleCart(),
+                     navigate('/user/cart')):
+                        navigate('/user/login',{state:{from:location.pathname}})}>Buy</button>
                 <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700' 
                 onClick={
                     ()=>
