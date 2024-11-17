@@ -19,6 +19,8 @@ function Cart() {
         });
 
         setData(response.data);
+        console.log(response.data);
+        
         const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalPrice(total);
 
@@ -42,6 +44,25 @@ function Cart() {
       console.log(error);
     }
   };
+
+  const PlaceOrder= async ()=>{
+    try {
+      await axios.post('http://127.0.0.1:8000/api/order/',{
+          name:data.name,
+          quantity:data.quantity,
+          price:data.price,
+          image:data.image
+      },{
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
+      }})
+      console.log('success');
+      
+  } catch (error) {
+      console.log(error);
+      
+  }
+  }
 
   return (
     <section className="h-screen bg-customColor">
@@ -111,12 +132,14 @@ function Cart() {
               </div>
 
               <div className="mt-6 text-center">
-                <button type="button" className="group inline-flex w-full items-center justify-center rounded-md bg-customColor px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+                <Link to='/user/invoice'>
+                <button type="button" className="group inline-flex w-full items-center justify-center rounded-md bg-customColor px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800" >
                   Place Order
                   <svg xmlns="http://www.w3.org/2000/svg" className="group-hover:ml-8 ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </button>
+                </Link>
               </div>
             </div>
           </div>

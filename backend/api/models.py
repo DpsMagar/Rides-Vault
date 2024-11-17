@@ -83,6 +83,8 @@ class Cart(models.Model):
     total_price= models.IntegerField()
     image = models.URLField()
     # image = models.ImageField(upload_to='cart_items', null=True, blank=True)
+    is_processed= models.BooleanField(default=False)
+
 
     
     def save(self, *args, **kwargs):
@@ -95,17 +97,21 @@ def generate_order_number():
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    item_type = models.CharField(max_length=50)     
-    item_id = models.PositiveIntegerField()  
-    quantity = models.PositiveIntegerField()
+    name= models.CharField(max_length=40, default='Unknown')
+    quantity= models.IntegerField(default=1)
+    price = models.PositiveIntegerField(default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     ordered_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='order_items', null=True, blank=True)
-    
+    image = models.URLField( null=True)
     order_number = models.CharField(max_length=5, default=generate_order_number, unique=True)
+    is_processed= models.BooleanField(default=False)
 
     def __str__(self):
         return self.order_number
+    
+    def save(self, *args, **kwargs):
+        self. total_price= self.price * self.quantity
+        super().save(*args, **kwargs)
 
     
 class Bookmarks(models.Model):

@@ -87,14 +87,14 @@ class GloveSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'added_at', 'total_price']
+        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'added_at', 'total_price', 'is_processed']
         read_only_fields = ['total_price','user']
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number']
-        read_only_fields = ['order_number']
+        fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number']
+        read_only_fields = ['order_number','total_price','user']
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
