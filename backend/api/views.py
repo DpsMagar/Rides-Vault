@@ -71,13 +71,14 @@ class CartViewSet(viewsets.ModelViewSet):
 
         # If the item doesn't exist, save a new cart item
         serializer.save(user=user)
+        
+        
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Restrict orders to the logged-in user
         return Order.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
@@ -85,49 +86,36 @@ class OrderViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
-        """
-        Override create to handle bulk data (array of objects).
-        """
         data = request.data
+        username = request.user
 
-        # Get the username of the logged-in user
-        username = request.user.username
+        # Initialize the response data with username and orders key
+        response_data = {
+            # "user_name": username,
+            "orders": []
+        }
 
-        # Check if the incoming data is a list (bulk data)
-        if isinstance(data, list):
+        if isinstance(data, list):  # Handle bulk order creation
             # Delete unprocessed orders for the user
             Order.objects.filter(user=request.user, is_processed=False).delete()
 
-            # List to store the serialized order data
-            response_data = {
-                "user_name": username,  # Add the username to the response data
-                "orders": []
-            }
-
+            # Bulk creation wrapped in a transaction
             with transaction.atomic():
-                try:
-                    # Validate and save each object in the array
-                    serializers = [self.get_serializer(data=item) for item in data]
-                    for serializer in serializers:
-                        serializer.is_valid(raise_exception=True)
-                        # Save each order with additional fields
-                        serializer.save(user=request.user, is_processed=False)
-                        response_data["orders"].append(serializer.data)
-                    
-                    return Response(response_data, status=status.HTTP_201_CREATED)
-                except ValidationError as e:
-                    # Handle validation errors in a more user-friendly way
-                    return Response({'detail': 'Bulk order creation failed', 'errors': e.detail}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Handle single object as usual
-        response_data = {
-            "user_name": username,  # Add the username to the response data for single order creation
-            "orders": []
-        }
-        # Call the parent class's create method for single order
-        response = super().create(request, *args, **kwargs)
-        response_data["orders"].append(response.data)  # Append the created order data to the response
-        return Response(response_data, status=response.status_code)
+                for item in data:
+                    serializer = self.get_serializer(data=item)
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save(user=request.user, is_processed=False)
+                    response_data["orders"].append(serializer.data)
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
+        else:  # Handle single order creation
+            serializer = self.get_serializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(user=request.user, is_processed=False)
+            response_data["orders"].append(serializer.data)
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
         
 class HelmetViewSet(viewsets.ModelViewSet):
     queryset = Helmet.objects.all()
