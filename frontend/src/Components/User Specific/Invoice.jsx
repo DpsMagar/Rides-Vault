@@ -13,13 +13,13 @@ const Invoice = () => {
 
         const fetch= async ()=>{
             try {
-                const response= await axios.get('http://127.0.0.1:8000/api/cart/',{
+                const response= await axios.get('http://127.0.0.1:8000/api/order/',{
                     headers:{
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     }
                 })
                 setData(response.data)
-                //  console.log(response.data);
+                 console.log(response.data);
                 const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 setTotalPrice(total );
 

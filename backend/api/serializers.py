@@ -95,6 +95,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number']
         read_only_fields = ['order_number','total_price','user']
+        
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:

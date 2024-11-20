@@ -81,6 +81,27 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         
+    def create(self, request, *args, **kwargs):
+        """
+        Override create to handle bulk data (array of objects).
+        """
+        data = request.data
+
+        # Check if the incoming data is a list (bulk data)
+        if isinstance(data, list):
+            # Validate and save each object in the array
+            serializers = [self.get_serializer(data=item) for item in data]
+            for serializer in serializers:
+                serializer.is_valid(raise_exception=True)
+                serializer.save(user=request.user)
+
+            # Return a response with the serialized data
+            response_data = [serializer.data for serializer in serializers]
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        
+        # Handle single object as usual
+        return super().create(request, *args, **kwargs)
+        
 class HelmetViewSet(viewsets.ModelViewSet):
     queryset = Helmet.objects.all()
     serializer_class = HelmetSerializer

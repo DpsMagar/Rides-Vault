@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../Images/PrimaryLogo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 
 function Cart() {
   const [data, setData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [refresh, setRefresh] = useState(false);  // New state to trigger re-fetch
+  const [filteredData, setFilteredData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetch = async () => {
@@ -19,8 +20,7 @@ function Cart() {
         });
 
         setData(response.data);
-        // console.log(response.data);
-        
+
         const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalPrice(total);
 
@@ -29,7 +29,7 @@ function Cart() {
       }
     };
     fetch();
-  }, [refresh]);  // Dependency on 'refresh' to trigger re-fetch
+  }, [refresh]);
 
   const handleDelete = async (itemId) => {
     try {
@@ -38,38 +38,47 @@ function Cart() {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         }
       });
-      console.log('Item deleted');
-      setRefresh(prev => !prev);  // Toggle 'refresh' to trigger useEffect
+      setRefresh(prev => !prev);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const PlaceOrder= async ()=>{
+  useEffect(() => {
+    const filteredData = data.map((item) => ({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+      image: item.image,
+    }));
+
+    setFilteredData(filteredData);
+  }, [data]);
+
+  const PlaceOrder = async (e) => {
+    e.preventDefault();  // Prevents Link from navigating prematurely
+
     try {
-      await axios.post('http://127.0.0.1:8000/api/order/',{
-          name:data.name,
-          quantity:data.quantity,
-          price:data.price,
-          image:data.image
-      },{
-          headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
-      }})
-      console.log('success');
-      
-  } catch (error) {
-      console.log(error);
-      
-  }
-  }
+      await axios.post('http://127.0.0.1:8000/api/order/', filteredData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        }
+      });
+
+      console.log('Order placed successfully');
+      navigate('/user/invoice');  
+
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
+  };
 
   return (
     <section className="h-screen bg-customColor">
       <Link to='/'>
         <img src={logo} alt="" className='absolute p-6' />
       </Link>
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 ">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center">
           <h1 className="text-2xl font-semibold text-gray-900">Your Cart</h1>
         </div>
@@ -102,9 +111,7 @@ function Cart() {
                           <button
                             type="button"
                             className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
-                            onClick={() =>{if (window.confirm(`Are you sure you want to delete ${item.name}?`)) {
-                              handleDelete(item.id) // Proceed with the deletion only if confirmed
-                          }}}
+                            onClick={() => { if (window.confirm(`Are you sure you want to delete ${item.name}?`)) { handleDelete(item.id); } }}
                           >
                             ❌
                           </button>
@@ -115,7 +122,7 @@ function Cart() {
                 </ul>
               </div>
 
-              <div className="mt-6 space-y-3 border-t-2 border-b-2 border-customColor  py-8 text-black">
+              <div className="mt-6 space-y-3 border-t-2 border-b-2 border-customColor py-8 text-black">
                 <div className="flex items-center justify-between">
                   <p>Subtotal</p>
                   <p className="text-lg font-semibold text-gray-900">Rs.{totalPrice}</p>
@@ -132,14 +139,16 @@ function Cart() {
               </div>
 
               <div className="mt-6 text-center">
-                <Link to='/user/invoice'>
-                <button type="button" className="group inline-flex w-full items-center justify-center rounded-md bg-customColor px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800" >
+                <button
+                  type="button"
+                  className="group inline-flex w-full items-center justify-center rounded-md bg-customColor px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+                  onClick={PlaceOrder}
+                >
                   Place Order
                   <svg xmlns="http://www.w3.org/2000/svg" className="group-hover:ml-8 ml-4 h-6 w-6 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </button>
-                </Link>
               </div>
             </div>
           </div>
