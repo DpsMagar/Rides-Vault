@@ -19,9 +19,9 @@ const Invoice = () => {
                     }
                 })
                 setData(response.data)
-                console.log(response.data);
+                //  console.log(response.data);
                 const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                setTotalPrice(total);
+                setTotalPrice(total );
 
             } catch (error) {
                 console.log(error);
@@ -66,7 +66,7 @@ const Invoice = () => {
                 <tbody> 
                   
                   {data.map((items)=>(
-                                <tr className="border-b border-slate-200">
+                                <tr className="border-b border-slate-200" key={items.id}>
                                 <td className="py-4 text-sm font-medium text-slate-700">{items.name}</td>
                                 <td className="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">{items.quantity}</td>
                                 <td className="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">{`Rs.${items.price}`}</td>
@@ -76,8 +76,8 @@ const Invoice = () => {
                 </tbody>
                 <tfoot>
                   <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">Subtotal</th><td className="pt-6 text-sm text-right text-slate-500">Rs.{totalPrice}</td></tr>
-                  <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">{`Discount:${" "}0.00 `}</th><td className="pt-6 text-sm text-right text-slate-500">{`Tax:${" "}0`}</td></tr>
-                  <tr><th colSpan="3" className="hidden pt-4 text-right text-sm font-normal text-slate-700 sm:table-cell">Total</th><td className="pt-4 text-sm text-right text-slate-700">{totalPrice}</td></tr>
+                  <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">{`Discount:${" "}0.00 `}</th><td className="pt-6 text-sm text-right text-slate-500">{`Shipping:${" "}RS.150`}</td></tr>
+                  <tr><th colSpan="3" className="hidden pt-4 text-right text-sm font-normal text-slate-700 sm:table-cell">Total</th><td className="pt-4 text-sm text-right text-slate-700">{totalPrice + 150}</td></tr>
                 </tfoot>
               </table>
             </div>

@@ -113,7 +113,7 @@ class Order(models.Model):
         self. total_price= self.price * self.quantity
         super().save(*args, **kwargs)
 
-    
+        
 class Bookmarks(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
     item_type = models.CharField(max_length=50)  

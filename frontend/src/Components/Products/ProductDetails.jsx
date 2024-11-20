@@ -35,7 +35,7 @@ useEffect(() => {
             const response = await axios.get(`http://127.0.0.1:8000/api/${pathsegments[1]}/${id}`);
             setData(response.data);
             setPrice(response.data.price)            
-            console.log(response.data.image);
+            // console.log(response.data.image);
             
             
         } catch (error) {

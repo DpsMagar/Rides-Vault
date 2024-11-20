@@ -19,7 +19,7 @@ function Cart() {
         });
 
         setData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         
         const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalPrice(total);
