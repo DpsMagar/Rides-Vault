@@ -90,24 +90,44 @@ class OrderViewSet(viewsets.ModelViewSet):
         """
         data = request.data
 
+        # Get the username of the logged-in user
+        username = request.user.username
+
         # Check if the incoming data is a list (bulk data)
         if isinstance(data, list):
             # Delete unprocessed orders for the user
             Order.objects.filter(user=request.user, is_processed=False).delete()
 
-            # Validate and save each object in the array
-            with transaction.atomic():
-                serializers = [self.get_serializer(data=item) for item in data]
-                for serializer in serializers:
-                    serializer.is_valid(raise_exception=True)
-                    serializer.save(user=request.user, is_processed=False)
+            # List to store the serialized order data
+            response_data = {
+                "user_name": username,  # Add the username to the response data
+                "orders": []
+            }
 
-                # Return a response with the serialized data
-                response_data = [serializer.data for serializer in serializers]
-                return Response(response_data, status=status.HTTP_201_CREATED)
+            with transaction.atomic():
+                try:
+                    # Validate and save each object in the array
+                    serializers = [self.get_serializer(data=item) for item in data]
+                    for serializer in serializers:
+                        serializer.is_valid(raise_exception=True)
+                        # Save each order with additional fields
+                        serializer.save(user=request.user, is_processed=False)
+                        response_data["orders"].append(serializer.data)
+                    
+                    return Response(response_data, status=status.HTTP_201_CREATED)
+                except ValidationError as e:
+                    # Handle validation errors in a more user-friendly way
+                    return Response({'detail': 'Bulk order creation failed', 'errors': e.detail}, status=status.HTTP_400_BAD_REQUEST)
         
         # Handle single object as usual
-        return super().create(request, *args, **kwargs)
+        response_data = {
+            "user_name": username,  # Add the username to the response data for single order creation
+            "orders": []
+        }
+        # Call the parent class's create method for single order
+        response = super().create(request, *args, **kwargs)
+        response_data["orders"].append(response.data)  # Append the created order data to the response
+        return Response(response_data, status=response.status_code)
         
 class HelmetViewSet(viewsets.ModelViewSet):
     queryset = Helmet.objects.all()
