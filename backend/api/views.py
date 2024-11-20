@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db.models import F
+from django.db import transaction
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -76,11 +77,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        # Restrict orders to the logged-in user
         return Order.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        # Automatically associate the order with the current user
         serializer.save(user=self.request.user)
-        
+
     def create(self, request, *args, **kwargs):
         """
         Override create to handle bulk data (array of objects).
@@ -89,15 +92,19 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         # Check if the incoming data is a list (bulk data)
         if isinstance(data, list):
-            # Validate and save each object in the array
-            serializers = [self.get_serializer(data=item) for item in data]
-            for serializer in serializers:
-                serializer.is_valid(raise_exception=True)
-                serializer.save(user=request.user)
+            # Delete unprocessed orders for the user
+            Order.objects.filter(user=request.user, is_processed=False).delete()
 
-            # Return a response with the serialized data
-            response_data = [serializer.data for serializer in serializers]
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            # Validate and save each object in the array
+            with transaction.atomic():
+                serializers = [self.get_serializer(data=item) for item in data]
+                for serializer in serializers:
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save(user=request.user, is_processed=False)
+
+                # Return a response with the serialized data
+                response_data = [serializer.data for serializer in serializers]
+                return Response(response_data, status=status.HTTP_201_CREATED)
         
         # Handle single object as usual
         return super().create(request, *args, **kwargs)

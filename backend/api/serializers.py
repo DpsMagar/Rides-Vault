@@ -91,9 +91,10 @@ class CartSerializer(serializers.ModelSerializer):
         read_only_fields = ['total_price','user']
 
 class OrderSerializer(serializers.ModelSerializer):
+    user_name= serializers.CharField(source='user.username', read_only= True)
     class Meta:
         model = Order
-        fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number']
+        fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number','user_name']
         read_only_fields = ['order_number','total_price','user']
         
 
