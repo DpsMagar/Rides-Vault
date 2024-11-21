@@ -106,7 +106,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
     user_name = serializers.ReadOnlyField()
-    ordered_at = serializers.DateTimeField(format="%B %d, %Y, %I:%M %p") 
+    ordered_at = serializers.DateTimeField(format="%B %d, %Y, %I:%M %p", read_only=True) 
 
     class Meta:
         model = Order
