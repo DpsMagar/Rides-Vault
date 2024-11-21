@@ -105,10 +105,12 @@ class OrderItemSerializer(serializers.ModelSerializer):
         
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    user_name = serializers.ReadOnlyField()
+    ordered_at = serializers.DateTimeField(format="%B %d, %Y, %I:%M %p") 
 
     class Meta:
         model = Order
-        fields = ['id', 'user', 'order_number', 'total_price', 'ordered_at', 'is_processed', 'items']
+        fields = ['id', 'user', 'order_number', 'total_price', 'ordered_at', 'is_processed', 'items','user_name']
         read_only_fields= ['user','total_price']
     
     def create(self, validated_data):

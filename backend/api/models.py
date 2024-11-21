@@ -22,6 +22,10 @@ class Order(models.Model):
     def update_total_price(self):
         self.total_price= sum(item.total_price for  item in self.items.all() )
         self.save()
+    
+    @property
+    def user_name(self):
+        return self.user.username
         
 class orderItem(models.Model):
     order= models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')

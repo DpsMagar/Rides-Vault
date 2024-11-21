@@ -88,7 +88,9 @@ class OrderViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         data = request.data
         user = request.user
-        response_data = {"orders": []}
+        response_data = {
+            "user_name":user.username,
+            "orders": []}
 
         with transaction.atomic():
             unprocessed_orders = Order.objects.filter(user=user, is_processed=False)
