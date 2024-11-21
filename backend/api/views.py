@@ -1,6 +1,10 @@
 from rest_framework import viewsets
 from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order
-from .serializers import HelmetSerializer, BootSerializer, PantsSerializer, JacketSerializer, GloveSerializer, UserSerializer, LoginSerializer, BookmarkSerializer, CartSerializer, OrderSerializer
+from .serializers import (
+    HelmetSerializer, BootSerializer, PantsSerializer, JacketSerializer, 
+    GloveSerializer, UserSerializer, LoginSerializer, 
+    BookmarkSerializer, CartSerializer, OrderSerializer
+)
 from rest_framework import generics, status, serializers
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -9,9 +13,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db.models import F
 from django.db import transaction
 
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    permission_classes=[AllowAny]
+    permission_classes = [AllowAny]
+
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -26,7 +32,8 @@ class LoginView(generics.GenericAPIView):
             'access': str(refresh.access_token),
             'name': user.username,
         })
-        
+
+
 class BookmarkViewSet(viewsets.ModelViewSet):
     queryset = Bookmarks.objects.all()
     serializer_class = BookmarkSerializer
@@ -38,14 +45,14 @@ class BookmarkViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-        
+
+
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Ensure only the authenticated user's cart items are visible
         return Cart.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
@@ -53,26 +60,20 @@ class CartViewSet(viewsets.ModelViewSet):
         data = self.request.data
         name = data.get('name')
         item_type = data.get('item_type')
-
-        # Check if the item already exists for this user
         existing_cart_item = Cart.objects.filter(user=user, name=name, item_type=item_type).first()
 
         if existing_cart_item:
-            # Update the quantity of the existing item
-            existing_cart_item.quantity = F('quantity') + data.get('quantity', 1)  # Default to 1 if quantity is not sent
+            existing_cart_item.quantity = F('quantity') + data.get('quantity', 1)
             existing_cart_item.save()
-            existing_cart_item.refresh_from_db()  # Refresh to get the updated quantity
-
-            # Return a custom response indicating that the item was updated
+            existing_cart_item.refresh_from_db()
             return Response({
                 "message": "Item quantity updated successfully!",
                 "cart_item": CartSerializer(existing_cart_item).data
             }, status=status.HTTP_200_OK)
 
-        # If the item doesn't exist, save a new cart item
         serializer.save(user=user)
-        
-        
+
+
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
@@ -82,41 +83,32 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Order.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        # Automatically associate the order with the current user
         serializer.save(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        username = request.user
+        user = request.user
+        response_data = {"orders": []}
 
-        # Initialize the response data with username and orders key
-        response_data = {
-            # "user_name": username,
-            "orders": []
-        }
+        with transaction.atomic():
+            unprocessed_orders = Order.objects.filter(user=user, is_processed=False)
+            unprocessed_orders.delete()
 
-        if isinstance(data, list):  # Handle bulk order creation
-            # Delete unprocessed orders for the user
-            Order.objects.filter(user=request.user, is_processed=False).delete()
-
-            # Bulk creation wrapped in a transaction
-            with transaction.atomic():
+            if isinstance(data, list):
                 for item in data:
                     serializer = self.get_serializer(data=item)
                     serializer.is_valid(raise_exception=True)
                     serializer.save(user=request.user, is_processed=False)
                     response_data["orders"].append(serializer.data)
+            else:
+                serializer = self.get_serializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save(user=request.user, is_processed=False)
+                response_data["orders"].append(serializer.data)
 
-            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(response_data, status=status.HTTP_201_CREATED)
 
-        else:  # Handle single order creation
-            serializer = self.get_serializer(data=data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save(user=request.user, is_processed=False)
-            response_data["orders"].append(serializer.data)
 
-            return Response(response_data, status=status.HTTP_201_CREATED)
-        
 class HelmetViewSet(viewsets.ModelViewSet):
     queryset = Helmet.objects.all()
     serializer_class = HelmetSerializer

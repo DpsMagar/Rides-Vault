@@ -44,7 +44,7 @@ const Invoice = () => {
             </div>
       )
     }
-
+    
   return (
     <section className=" bg-black">
       <div className=" mx-auto  bg-white">
@@ -60,7 +60,7 @@ const Invoice = () => {
             {/* Invoice Details */}
             <div className="p-9 grid grid-cols-4 gap-12 text-sm text-slate-500">
               <div><p className="font-normal text-slate-700">Invoice Detail:</p><p>rideVault</p><p>Bagmati, Kathmandu</p><p>Baneshowr, 44600</p></div>
-              <div><p className="font-normal text-slate-700">Billed To</p> <p>{data[0].user_name.charAt(0).toUpperCase() + data[0].user_name.slice(1)}</p><p>Nepal</p></div>
+              {/* <div><p className="font-normal text-slate-700">Billed To</p> <p>{data[0].user_name.charAt(0).toUpperCase() + data[0].user_name.slice(1)}</p><p>Nepal</p></div> */}
               <div><p className="font-normal text-slate-700">Invoice Number</p><p>000000</p><p className="mt-2 font-normal text-slate-700">Date of Issue</p><p>00.00.00</p></div>
               <div><p className="font-normal text-slate-700">Terms</p><p>Due on receipt</p></div>
             </div>

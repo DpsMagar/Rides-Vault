@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order
+from .models import Helmet, Boot, Pants, Jacket, Glove, Bookmarks, Cart, Order, orderItem
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import ValidationError
@@ -90,13 +90,59 @@ class CartSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'item_type', 'name', 'price', 'quantity', 'image', 'added_at', 'total_price', 'is_processed']
         read_only_fields = ['total_price','user']
 
+# class OrderSerializer(serializers.ModelSerializer):
+#     user_name= serializers.CharField(source='user.username', read_only= True)
+#     class Meta:
+#         model = Order
+#         fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number','user_name']
+#         read_only_fields = ['order_number','total_price','user']
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= orderItem
+        fields = ['id', 'name', 'quantity', 'price', 'total_price', 'image']
+        read_only_fields=['total_price']
+        
 class OrderSerializer(serializers.ModelSerializer):
-    user_name= serializers.CharField(source='user.username', read_only= True)
+    items = OrderItemSerializer(many=True)
+
     class Meta:
         model = Order
-        fields = ['id', 'user', 'name', 'price', 'quantity', 'image', 'total_price', 'ordered_at', 'order_number','user_name']
-        read_only_fields = ['order_number','total_price','user']
+        fields = ['id', 'user', 'order_number', 'total_price', 'ordered_at', 'is_processed', 'items']
+        read_only_fields= ['user','total_price']
+    
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
         
+        for item_data in items_data:
+            orderItem.objects.create(order=order, **item_data)
+            
+        order.update_total_price()
+        return order
+
+    def update(self, instance, validated_data):
+        items_data = validated_data.pop('items')
+        instance.user = validated_data.get('user', instance.user)
+        instance.is_processed = validated_data.get('is_processed', instance.is_processed)
+        instance.save()
+
+        # Update items
+        for item_data in items_data:
+            item_id = item_data.get('id')
+            if item_id:
+                item = orderItem.objects.get(id=item_id)
+                item.name = item_data.get('name', item.name)
+                item.quantity = item_data.get('quantity', item.quantity)
+                item.price = item_data.get('price', item.price)
+                item.save()
+            else:
+                orderItem.objects.create(order=instance, **item_data)
+        instance.update_total_price()  # Update the order's total price
+        return instance
+        
+
+
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
