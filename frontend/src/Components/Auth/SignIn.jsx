@@ -16,7 +16,7 @@ const SignIn = () => {
     const [error , setError]= useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const location= useLocation();
+    const location = useLocation();
     const from = location.state?.from || '/'
     
 

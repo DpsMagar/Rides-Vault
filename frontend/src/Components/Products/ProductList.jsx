@@ -30,7 +30,7 @@ function ProductList() {
   return (
       
       <div className='min-h-screen bg-customColor max-w-screen p-10 overflow-hidden'>
-        <div className='text-7xl font-teko'>{message.charAt(0).toUpperCase() + message.slice(1)}s:</div>
+        {/* <div className='text-7xl font-teko'>{message.charAt(0).toUpperCase() + message.slice(1)}s:</div>     */}
         <div className='p-3 mx-9 mt-1 h-full w-full flex flex-wrap justify-start gap-7'>
 
             {data.map((item)=>(

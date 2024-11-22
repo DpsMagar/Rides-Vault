@@ -4,6 +4,8 @@ import { useLocation, Link } from "react-router-dom";
 const Breadcrumb = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
+  console.log(pathnames);
+  
 
   return (
     <nav aria-label="breadcrumb" className="absolute flex">
@@ -13,6 +15,8 @@ const Breadcrumb = () => {
         </li>
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+          console.log(to);
+          
           return (
             <li key={to} className="hover:underline hover:cursor-pointer">
               <span className="mx-1">/</span>
