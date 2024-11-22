@@ -52,8 +52,8 @@ const Invoice = () => {
           <div className="bg-white rounded-b-md">
             {/* Header Section */}
                 <div className="mx-9 mt-6 text-slate-700">
-                <Link to='/'>
-                  <img className="h-12" src={Logo} alt="Logo" />
+                <Link className='w' to='/'>
+                  <img className="h-12 block " src={Logo} alt="Logo" />
                 </Link>
                 </div>
 

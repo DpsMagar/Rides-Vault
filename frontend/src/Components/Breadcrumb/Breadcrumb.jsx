@@ -1,18 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useLocation, Link } from "react-router-dom";
 
-const Breadcrumb = ({ paths }) => {
+const Breadcrumb = () => {
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((x) => x);
+
   return (
-    <nav aria-label="breadcrumb">
-      <ol className="flex space-x-2 text-sm text-gray-600">
-        {paths.map((path, index) => (
-          <li key={index} className="flex items-center">
-            {index !== 0 && <span className="mx-2">›</span>}
-            <Link to={path.link} className="text-blue-600 hover:underline">
-              {path.label}
-            </Link>
-          </li>
-        ))}
+    <nav aria-label="breadcrumb" className="absolute flex">
+      <ol className="w-screen -mx-6 mt-5 breadcrumb flex gap-1 justify-end">
+        <li className="hover:underline">
+          <Link to="/">Home</Link>
+        </li>
+        {pathnames.map((value, index) => {
+          const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+          return (
+            <li key={to} className="hover:underline hover:cursor-pointer">
+              <span className="mx-1">/</span>
+              {index === pathnames.length - 1 ? (
+                <span>{value}</span> 
+              ) : (
+                <Link to={to}>{value}</Link> 
+              )}
+            </li>
+          );
+        })}
       </ol>
     </nav>
   );
