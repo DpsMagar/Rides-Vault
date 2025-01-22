@@ -10,13 +10,15 @@ import { useSelector } from 'react-redux'
 import logo from '../../Images/PrimaryLogo.png'
 import { Link } from 'react-router-dom'
 
+
 function ProductDetails() {
 const [quantity, setQuantity] = useState(1);
 const [price, setPrice]= useState(0)
 const [data, setData] = useState([])
 // const {state: id}= useLocation();
-const id=localStorage.getItem('id')
+// const id=localStorage.getItem('id')
 const navigate = useNavigate();
+const id= useSelector((state)=> state.currentItem?.itemType|| 1)
 
 
 const location = useLocation();

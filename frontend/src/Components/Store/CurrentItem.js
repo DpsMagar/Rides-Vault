@@ -5,7 +5,7 @@ const initialState={
 };
 
 const currentItemSlice= createSlice({
-    name:'itemType',
+    name:'item_type',
     initialState,
     reducers:{
         setItemName:(state, action)=>{
