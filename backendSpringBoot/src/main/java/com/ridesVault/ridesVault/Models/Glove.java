@@ -1,0 +1,29 @@
+package com.ridesVault.ridesVault.Models;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class Glove {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String brand;
+    private String size;
+    private String color;
+    private int price;
+    private int stockQuantity;
+    private String image;
+
+    @Override
+    public String toString() {
+        return brand + " Glove (" + size + ")";
+    }
+}
