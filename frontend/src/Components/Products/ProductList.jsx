@@ -18,7 +18,9 @@ function ProductList() {
         const fetchData = async () => {
             try {
                 // const response = await axios.get(`http://127.0.0.1:8000/api/${message}/`);
-                const response = await axios.get(`http://localhost:8080/api/helmets`);
+                const response = await axios.get(`http://localhost:8080/api/${message}`);
+                console.log(message);
+                
                 setData(response.data);
                 console.log(response.data);
                 
@@ -51,7 +53,7 @@ function ProductList() {
                 {/* {localStorage.setItem('id', item.id)} */}
                     <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center shadow-lg hover:shadow-md hover:shadow-yellow-800'>
                         <div className='size-44 mx-auto'>
-                            <img src={item.image_path} alt="" />
+                            <img src={`http://localhost:8080/Images/${message}/${item.image_name}`} alt="" />
                         </div >
                         <span className='text-gray-500 w-auto mx-auto'>{item.name}</span>
                     </div>

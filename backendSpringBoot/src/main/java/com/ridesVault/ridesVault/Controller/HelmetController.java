@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/helmets")
+@RequestMapping("/api/helmet")
 public class HelmetController {
     @Autowired
     private HelmetService helmetService;
