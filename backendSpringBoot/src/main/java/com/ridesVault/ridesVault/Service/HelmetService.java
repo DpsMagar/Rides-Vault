@@ -48,4 +48,8 @@ public class HelmetService {
         byte[] images = Files.readAllBytes(new File(filePath).toPath());
         return images;
     }
+
+    public Optional<Helmet> getHelmetsByKey(Long Key) {
+        return repo.findById(Key);
+    }
 }

@@ -4,7 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 const Breadcrumb = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
-  console.log(pathnames);
+  // console.log(pathnames);
   
 
   return (
@@ -15,7 +15,7 @@ const Breadcrumb = () => {
         </li>
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join("/")}`;
-          console.log(to);
+          // console.log(to);
           
           return (
             <li key={to} className="hover:underline hover:cursor-pointer">

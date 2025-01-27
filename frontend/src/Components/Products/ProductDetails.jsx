@@ -24,7 +24,7 @@ const id= useSelector((state)=> state.currentItem?.itemType|| 1)
 const location = useLocation();
 const pathsegments= location.pathname.split('/')
 
-const excludedKeys = ['id','price','name','image']
+const excludedKeys = ['id','price','name','image','image_name','image_type', 'image_path']
 
 const userName= useSelector((state)=> state.user.userName);
 
@@ -34,7 +34,7 @@ useEffect(() => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/${pathsegments[1]}/${id}`);
+            const response = await axios.get(`http://localhost:8080/api/${pathsegments[1]}/${id}`);
             setData(response.data);
             setPrice(response.data.price)            
             // console.log(response.data.image);
@@ -78,7 +78,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
     <div className='w-screen h-screen bg-customColor flex overflow-hidden p-5 text-white'>
         <Link to='/'> <img src={logo} alt="" className='absolute'/> </Link>
         <div className='mt-44'>
-            <img src={data.image} alt="" className='size-[300px] rounded-e-md ' />
+            <img src={`http://localhost:8080/Images/${pathsegments[1]}/${data.image_name}`} alt="" className='size-[300px] rounded-e-md ' />
         </div>
         <div className='mx-40 mt-4 flex flex-col gap-3'>
             <div className='text-5xl'> {data.name}</div> 

@@ -10,5 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface HelmetRepo extends JpaRepository<Helmet, Long> {
+    Optional<Helmet> findById(Long id);
     Optional<Helmet> findByName(String name);
 }
