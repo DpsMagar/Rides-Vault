@@ -1,17 +1,24 @@
 package com.ridesVault.ridesVault.Models;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "helmets")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Helmet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = true)
+    @Column(length = 500, nullable = true)
     private String name;
 
     @Column(length = 100, nullable = false)
@@ -32,9 +39,17 @@ public class Helmet {
     @Column(nullable = false)
     private Integer stockQuantity;
 
-    @Lob
-    @Column(name = "image", nullable = true)
-    private byte[] image;
+//    @Lob
+    @Column(name = "image_name", nullable = true)
+    private String image_name;
+
+    @Column(name = "image_type", nullable = true)
+    private String image_type;
+
+    @Column(name = "image_path", nullable = true)
+    private String image_path;
+
+
 
     @Override
     public String toString() {
