@@ -43,7 +43,7 @@ public class HelmetService {
         helmet.setSafetyRating(safetyRating);
         helmet.setPrice(price);
         helmet.setStockQuantity(stockQuantity);
-        helmet.setImage_path(image_path.toString());
+        helmet.setImage_name(sanitized_image_name);
 
         return repo.save(helmet);
     }

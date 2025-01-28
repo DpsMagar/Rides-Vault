@@ -43,11 +43,7 @@ public class Helmet {
     @Column(name = "image_name", nullable = true)
     private String image_name;
 
-    @Column(name = "image_type", nullable = true)
-    private String image_type;
 
-    @Column(name = "image_path", nullable = true)
-    private String image_path;
 
 
 
