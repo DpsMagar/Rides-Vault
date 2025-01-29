@@ -1,14 +1,14 @@
 package com.ridesVault.ridesVault.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Glove {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Glove {
     private String color;
     private int price;
     private int stockQuantity;
-    private String image;
+    private String image_name;
 
     @Override
     public String toString() {
