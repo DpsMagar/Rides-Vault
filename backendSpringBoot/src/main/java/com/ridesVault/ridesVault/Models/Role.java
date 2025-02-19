@@ -1,4 +1,6 @@
 package com.ridesVault.ridesVault.Models;
 
-public class Role {
+public enum Role {
+        USER,
+        ADMIN
 }
