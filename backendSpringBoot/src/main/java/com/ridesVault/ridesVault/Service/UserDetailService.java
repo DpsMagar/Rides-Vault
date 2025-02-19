@@ -1,4 +1,4 @@
 package com.ridesVault.ridesVault.Service;
 
-public class AuthService {
+public class UserDetailService {
 }
