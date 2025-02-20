@@ -23,15 +23,22 @@ public class AuthService {
     }
 
     public String register(User user) {
+        // Encode the password and set the role before saving the user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
+        user.setRole(Role.USER); // Assuming role is USER by default
+
+        // Save the user
         userRepository.save(user);
-        return jwtUtil.generateToken(user.getEmail());
+
+        // Generate and return the JWT token
+        return jwtUtil.generateToken(user.getEmail());  // This is fine, you're returning the JWT to the frontend
     }
+
 
     public Optional<String> authenticate(String email, String password) {
         return userRepository.findByEmail(email)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(user -> jwtUtil.generateToken(email));
+                .map(user -> jwtUtil.generateToken(email));  // return JWT token
     }
+
 }
