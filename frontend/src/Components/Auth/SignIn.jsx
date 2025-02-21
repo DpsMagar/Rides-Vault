@@ -3,7 +3,7 @@ import gif from '../../Gif/flying-saucer-2949.gif'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUsername } from '../Store/userSlice';
+import { setuserId } from '../Store/userSlice';
 import { useLocation } from 'react-router-dom';
 
 
@@ -29,11 +29,11 @@ const SignIn = () => {
           })
           console.log(response);
           
-          const {refresh, access, name}= response.data;
-          localStorage.setItem("accessToken",access)
-          localStorage.setItem("refreshToken",refresh)
+          const {token, userId}= response.data;
+          localStorage.setItem("token",token)
+          localStorage.setItem("userId",userId)
           console.log("Logged in successfully");
-          dispatch(setUsername(name))
+          dispatch(setuserId(userId))
           navigate(from)
           
 

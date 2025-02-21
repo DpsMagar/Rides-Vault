@@ -26,7 +26,8 @@ const pathsegments= location.pathname.split('/')
 
 const excludedKeys = ['id','price','name','image','image_name','image_type', 'image_path']
 
-const userName= useSelector((state)=> state.user.userName);
+const userId= useSelector((state)=> state.user.userId);
+
 
 
 
@@ -49,25 +50,27 @@ useEffect(() => {
     
 }, []);
 
-const handleCart= async ()=>{
+const handleCart = async () => {
     try {
-        await axios.post('http://localhost:8080/user/carts',{
-            name:data.name,
-            quantity:quantity,
-            item_type: pathsegments[1],
-            price:price,
-            image:data.image_name
-        },{
+        await axios.post('http://localhost:8080/user/carts', {
+            name: data.name,
+            quantity: quantity,
+            itemType: pathsegments[1],
+            price: price,
+            image: data.image_name,
+            userId: userId
+        }, {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
-        }})
-        console.log('added');
-        
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        console.log('Added to cart successfully');
     } catch (error) {
-        console.log(error);
-        
+        console.error("Error posting:", error);
     }
-}
+};
+
 
 
 const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(items[0]))
@@ -109,7 +112,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
         <div className='flex gap-2 h-12 mt-[300px]'>
                 <button className='border-2 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 ' onClick={
                     ()=>
-                    userName?
+                    userId?
                         (handleCart(),
                         toast.success("Added Successfully",{
                             style: {
@@ -130,14 +133,14 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                 <button className='border-2 p-2 w-16 rounded-lg bg-slate-800 hover:bg-slate-700'
                 onClick={
                     ()=>
-                    userName?
+                    userId?
                     (handleCart(),
                      navigate('/user/cart')):
                         navigate('/user/login',{state:{from:location.pathname}})}>Buy</button>
                 <button className='border-2 p-2 rounded-lg bg-slate-600 hover:bg-slate-700' 
                 onClick={
                     ()=>
-                    userName?
+                    userId?
                     toast.success("Added to Wishlist",{
                     style: {
                         backgroundColor: "#52281c", 

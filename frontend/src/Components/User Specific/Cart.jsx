@@ -13,13 +13,15 @@ function Cart() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/cart/', {
+        const response = await axios.get('http://localhost:8080/user/carts', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           }
         });
 
         setData(response.data);
+        console.log(response.data);
+        
 
         const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
         setTotalPrice(total);
@@ -35,7 +37,7 @@ function Cart() {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/cart/${itemId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
       setRefresh(prev => !prev);
@@ -61,12 +63,13 @@ function Cart() {
     try {
       await axios.post('http://127.0.0.1:8000/api/order/', {items:filteredData}, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
 
       console.log('Order placed successfully');
       navigate('/user/invoice');  
+      
 
     } catch (error) {
       console.error('Error placing order:', error);
@@ -92,7 +95,7 @@ function Cart() {
                     <li key={item.id} className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
                       <div className="shrink-0 relative">
                         <span className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-full border bg-customColor text-sm font-medium text-white shadow sm:-top-2 sm:-right-2">{item.quantity}</span>
-                        <img className="h-24 w-24 max-w-full rounded-lg object-cover" src={item.image} alt="" />
+                        <img className="h-24 w-24 max-w-full rounded-lg object-cover" src={`http://localhost:8080/Images/${data.itemType}/${data.image}`} alt="" />
                       </div>
 
                       <div className="relative flex flex-1 flex-col justify-between">

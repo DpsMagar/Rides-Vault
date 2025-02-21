@@ -13,23 +13,17 @@ import java.util.Optional;
 public class CartService {
 
     private final CartRepo cartRepository;
-    private final UserRepo userRepository;
 
-    public CartService(CartRepo cartRepository, UserRepo userRepository) {
+    public CartService(CartRepo cartRepository) {
         this.cartRepository = cartRepository;
-        this.userRepository = userRepository;
     }
 
     public Cart addCart(CartDTO cartDTO) {
-        Optional<User> userOptional = userRepository.findById(cartDTO.getUserId());
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");  // Handle this properly in production
-        }
 
-        User user = userOptional.get();
+
 
         Cart cart = new Cart();
-        cart.setUser(user);
+        cart.setUser_id(cartDTO.getUserId());
         cart.setName(cartDTO.getName());
         cart.setQuantity(cartDTO.getQuantity());
         cart.setItemType(cartDTO.getItemType());
