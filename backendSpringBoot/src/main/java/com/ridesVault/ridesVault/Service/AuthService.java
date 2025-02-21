@@ -1,5 +1,6 @@
 package com.ridesVault.ridesVault.Service;
 
+import com.ridesVault.ridesVault.Dto.AuthResponseDTO;
 import com.ridesVault.ridesVault.Models.Role;
 import com.ridesVault.ridesVault.Models.User;
 import com.ridesVault.ridesVault.Repository.UserRepo;
@@ -35,10 +36,10 @@ public class AuthService {
     }
 
 
-    public Optional<String> authenticate(String email, String password) {
+    public Optional<AuthResponseDTO> authenticate(String email, String password) {
         return userRepository.findByEmail(email)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(user -> jwtUtil.generateToken(email));  // return JWT token
+                .map(user -> new AuthResponseDTO(jwtUtil.generateToken(email), user.getId()));  // return JWT token and useID
     }
 
 }

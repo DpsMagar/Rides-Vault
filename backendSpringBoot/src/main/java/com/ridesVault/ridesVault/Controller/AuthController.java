@@ -1,5 +1,6 @@
 package com.ridesVault.ridesVault.Controller;
 
+import com.ridesVault.ridesVault.Dto.AuthResponseDTO;
 import com.ridesVault.ridesVault.Models.User;
 import com.ridesVault.ridesVault.Service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
-        Optional<String> token = authService.authenticate(credentials.get("email"), credentials.get("password"));
-        return token.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(401).body("Invalid credentials"));
+        AuthResponseDTO authResponse = authService.authenticate(credentials.get("email"), credentials.get("password"))
+                .orElse(null);
+
+        if (authResponse != null) {
+            return ResponseEntity.ok(authResponse);
+        } else {
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+        }
     }
 }

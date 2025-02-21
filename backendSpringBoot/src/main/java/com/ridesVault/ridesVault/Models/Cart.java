@@ -1,6 +1,7 @@
 package com.ridesVault.ridesVault.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-
+@AllArgsConstructor
 public class Cart {
 
     @Id
@@ -42,6 +43,10 @@ public class Cart {
 
     @Column(nullable = false)
     private Boolean isProcessed = false;
+
+    public Cart() {
+
+    }
 
     // Getters and Setters
 

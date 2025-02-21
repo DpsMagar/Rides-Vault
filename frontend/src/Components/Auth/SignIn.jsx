@@ -27,7 +27,7 @@ const SignIn = () => {
             email: email,
             password: password
           })
-          // console.log(response);
+          console.log(response);
           
           const {refresh, access, name}= response.data;
           localStorage.setItem("accessToken",access)

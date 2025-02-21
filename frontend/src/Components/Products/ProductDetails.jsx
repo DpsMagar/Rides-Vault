@@ -51,12 +51,12 @@ useEffect(() => {
 
 const handleCart= async ()=>{
     try {
-        await axios.post('http://127.0.0.1:8000/api/cart/',{
+        await axios.post('http://localhost:8080/user/carts',{
             name:data.name,
             quantity:quantity,
             item_type: pathsegments[1],
             price:price,
-            image:data.image
+            image:data.image_name
         },{
             headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
