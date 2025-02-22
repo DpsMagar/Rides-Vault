@@ -35,7 +35,7 @@ function Cart() {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/cart/${itemId}`, {
+      await axios.delete(`http://localhost:8080/user/carts/${itemId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -125,7 +125,7 @@ function Cart() {
                 </ul>
               </div>
 
-              <div className="mt-6 space-y-3 border-t-2 border-b-2 border-customColor py-8 text-black">
+              <div className="mt-8 space-y-3 border-t-2 border-b-2 border-customColor py-8 text-black">
                 <div className="flex items-center justify-between">
                   <p>Subtotal</p>
                   <p className="text-lg font-semibold text-gray-900">Rs.{totalPrice}</p>

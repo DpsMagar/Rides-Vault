@@ -25,4 +25,9 @@ public class CartController {
     public ResponseEntity<?> getAllCarts() {
         return ResponseEntity.ok(cartService.getCarts());
     }
+
+    @DeleteMapping("/{key}")
+    public void deleteCart(@PathVariable Long key) {
+         cartService.deleteCart(key);
+    }
 }

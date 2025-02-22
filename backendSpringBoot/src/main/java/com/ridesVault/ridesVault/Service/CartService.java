@@ -36,4 +36,8 @@ public class CartService {
     public Object getCarts() {
         return cartRepository.findAll();
     }
+
+    public void deleteCart(Long key) {
+         cartRepository.deleteById(key);
+    }
 }
