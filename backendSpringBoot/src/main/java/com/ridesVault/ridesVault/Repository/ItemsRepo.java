@@ -1,14 +1,11 @@
 package com.ridesVault.ridesVault.Repository;
 
-import com.ridesVault.ridesVault.Models.Cart;
-import com.ridesVault.ridesVault.Models.User;
+import com.ridesVault.ridesVault.Models.Items;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface CartRepo extends JpaRepository<Cart, Long> {
+public interface ItemsRepo extends JpaRepository<Items, Long> {
 
 //    // Find all cart items for a specific user
 //    List<Cart> findByUser(User user);

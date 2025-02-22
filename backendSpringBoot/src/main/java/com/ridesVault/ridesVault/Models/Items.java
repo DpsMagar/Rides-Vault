@@ -10,13 +10,15 @@ import java.time.LocalDate;
 @Entity
 @Data
 @AllArgsConstructor
-public class Cart {
+public class Items {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false, length = 40)
     private String name;
@@ -42,7 +44,11 @@ public class Cart {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-    public Cart() {
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public Items() {
 
     }
 

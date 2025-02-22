@@ -31,7 +31,19 @@ public class Order {
     private Boolean isProcessed = false;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items;
+    private List<Items> items;
+
+    public BigDecimal calculateTotalPrice() {
+        return items.stream()
+                .map(item -> BigDecimal.valueOf(item.getPrice()).multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void updateTotalPrice() {
+        this.totalPrice = calculateTotalPrice();
+    }
 
     // Getters and Setters
 }

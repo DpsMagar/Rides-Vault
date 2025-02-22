@@ -52,7 +52,7 @@ useEffect(() => {
 
 const handleCart = async () => {
     try {
-        await axios.post('http://localhost:8080/user/carts', {
+        await axios.post('http://localhost:8080/user/items', {
             name: data.name,
             quantity: quantity,
             itemType: pathsegments[1],

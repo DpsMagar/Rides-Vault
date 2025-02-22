@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from '../../Images/PrimaryLogo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Cart() {
   const [data, setData] = useState([]);
@@ -10,10 +11,13 @@ function Cart() {
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
+  const userId= useSelector((state)=> state.user.userId);
+
+
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/user/carts', {
+        const response = await axios.get('http://localhost:8080/user/items', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           }
@@ -35,7 +39,7 @@ function Cart() {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8080/user/carts/${itemId}`, {
+      await axios.delete(`http://localhost:8080/user/items/${itemId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -61,7 +65,7 @@ function Cart() {
     e.preventDefault();  // Prevents Link from navigating prematurely
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/order/', {items:filteredData}, {
+      await axios.post('http://localhost:8080/user/items', {items:filteredData}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
