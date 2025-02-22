@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,9 +45,11 @@ public class Items {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @ManyToMany(mappedBy = "items")
+    private List<Order> orders;
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+//    private Order order;
 
     public Items() {
 

@@ -65,7 +65,7 @@ function Cart() {
     e.preventDefault();  // Prevents Link from navigating prematurely
 
     try {
-      await axios.post('http://localhost:8080/user/items', {items:filteredData}, {
+      await axios.post('http://localhost:8080/user/order', {items:filteredData}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }

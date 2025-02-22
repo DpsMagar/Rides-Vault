@@ -1,4 +1,5 @@
 package com.ridesVault.ridesVault.Models;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,7 +31,12 @@ public class Order {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+            name = "order_items",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
     private List<Items> items;
 
     public BigDecimal calculateTotalPrice() {
@@ -44,6 +50,4 @@ public class Order {
     private void updateTotalPrice() {
         this.totalPrice = calculateTotalPrice();
     }
-
-    // Getters and Setters
 }

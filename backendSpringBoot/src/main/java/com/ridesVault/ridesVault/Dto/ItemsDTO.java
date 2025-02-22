@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ItemsDTO {
-    private Integer userId;
+    private Long userId;
     private String name;
     private Integer quantity;
     private String itemType;
@@ -17,5 +17,5 @@ public class ItemsDTO {
     private LocalDate addedAt;
     private BigDecimal totalPrice;
     private Boolean isProcessed;
-    private Integer orderId;
+//    private Integer orderId;
 }
