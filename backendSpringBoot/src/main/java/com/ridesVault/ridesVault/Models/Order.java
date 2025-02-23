@@ -1,15 +1,21 @@
 package com.ridesVault.ridesVault.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "orders")
+@Setter
+@Getter
 public class Order {
 
     @Id
@@ -23,7 +29,7 @@ public class Order {
     @Column(unique = true, nullable = false)
     private String orderNumber;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = true, precision = 10, scale = 2)
     private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @Column(nullable = false)
@@ -38,17 +44,18 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
+//    @JsonIgnore
     private List<Items> items;
 
-    public BigDecimal calculateTotalPrice() {
-        return items.stream()
-                .map(item -> BigDecimal.valueOf(item.getPrice()).multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+
 
     @PrePersist
     @PreUpdate
-    private void updateTotalPrice() {
-        this.totalPrice = calculateTotalPrice();
+    private void prePersistAction() {
+        if (this.orderNumber == null || this.orderNumber.isEmpty()) {
+            this.orderNumber = "ORD-" + UUID.randomUUID().toString();
+        }
     }
+
+
 }

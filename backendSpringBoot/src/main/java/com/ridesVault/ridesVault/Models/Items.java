@@ -1,5 +1,6 @@
 package com.ridesVault.ridesVault.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +46,7 @@ public class Items {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "items")
     private List<Order> orders;
 

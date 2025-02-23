@@ -50,22 +50,30 @@ function Cart() {
     }
   };
 
-  useEffect(() => {
-    const filteredData = data.map((item) => ({
-      name: item.name,
-      quantity: item.quantity,
-      price: item.price,
-      image: item.image,
-    }));
+  // useEffect(() => {
+  //   const filteredData = data.map((item) => ({
+  //     name: item.name,
+  //     quantity: item.quantity,
+  //     image: item.image,
+  //     userId: userId
+  //   }));
 
-    setFilteredData(filteredData);
-  }, [data]);
+  //   setFilteredData(filteredData);
+  // }, [data]);
 
   const PlaceOrder = async (e) => {
     e.preventDefault();  // Prevents Link from navigating prematurely
 
+    const itemIds = data.map((item) => item.id);
+    console.log(itemIds);
+    
+
     try {
-      await axios.post('http://localhost:8080/user/order', {items:filteredData}, {
+      await axios.post('http://localhost:8080/user/order', 
+      {userId: userId,
+        items: itemIds,  
+        totalPrice: totalPrice,
+      }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemsDTO {
+    private Long id;
     private Long userId;
     private String name;
     private Integer quantity;
@@ -25,6 +26,7 @@ public class ItemsDTO {
 
     public ItemsDTO(Items item) {
         if (item != null) {
+            this.id=item.getId();
             this.userId = (item.getUser() != null) ? item.getUser().getId() : null;
             this.name = item.getName();
             this.quantity = item.getQuantity();
