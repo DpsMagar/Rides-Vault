@@ -47,9 +47,7 @@ public class Items {
 
     @ManyToMany(mappedBy = "items")
     private List<Order> orders;
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
+
 
     public Items() {
 

@@ -23,17 +23,15 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String password; // ✅ Store hashed password for security
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role; // ✅ Assuming you have an ENUM called Role
+    private Role role;
 
-    // ✅ One user can have multiple orders
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
 
-    // ✅ One user can have multiple items (if necessary)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Items> items;
 
