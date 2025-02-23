@@ -14,9 +14,9 @@ const Invoice = () => {
 
         const fetch= async ()=>{
             try {
-                const response= await axios.get('http://127.0.0.1:8000/api/order/',{
+                const response= await axios.get('http://localhost:8080/user/items',{
                     headers:{
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
                     }
                 })
                 setData(response.data)
