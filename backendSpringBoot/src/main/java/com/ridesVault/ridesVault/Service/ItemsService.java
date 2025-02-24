@@ -53,8 +53,10 @@ public class ItemsService {
 
     private User getAuthenticatedUser(){
         System.out.println("Extracted Email: " + getLoggedInUsername());
+        String username = getLoggedInUsername().split("Username=")[1].split(",")[0];
 
-        return userRepository.findByEmail(getLoggedInUsername())
+
+        return userRepository.findByEmail(username)
                 .orElseThrow(()->new RuntimeException("User not found!!"));
     }
 
@@ -62,6 +64,12 @@ public class ItemsService {
         Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return (principal instanceof User) ? ((User) principal).getEmail() : principal.toString();
     }
+//private String getLoggedInUsername() {
+//    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    return (principal instanceof org.springframework.security.core.userdetails.User)
+//            ? ((org.springframework.security.core.userdetails.User) principal).getUsername()  // Use getUsername() instead of getEmail()
+//            : principal.toString();
+//}
 
     public void deleteItem(Long key) {
         itemRepository.deleteById(key);

@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session (JWT is stateless)
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers("/api/auth/**","/api/helmet/**","/api/glove/**","/api/pant/**", "/api/jacket/**").permitAll() // Public endpoints (e.g., login, register)
-                        .requestMatchers("/api/**","/Images/**").permitAll() // Public endpoints (e.g., login, register)
+                                .requestMatchers("/api/**","/Images/**").permitAll() // Public endpoints (e.g., login, register)
+//                                .requestMatchers("/api/auth/login","/Images/**").permitAll() // Public endpoints (e.g., login, register)
                         .anyRequest().authenticated() // Secure other endpoints
                 )
                 .authenticationProvider(authenticationProvider())
