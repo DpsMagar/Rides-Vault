@@ -5,6 +5,7 @@ import com.ridesVault.ridesVault.Models.Items;
 import com.ridesVault.ridesVault.Models.User;
 import com.ridesVault.ridesVault.Repository.ItemsRepo;
 import com.ridesVault.ridesVault.Repository.UserRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,9 +44,23 @@ public class ItemsService {
     }
 
     public List<ItemsDTO> getItems() {
-        return itemRepository.findAll().stream()
+
+
+        return itemRepository.findByUser(getAuthenticatedUser()).stream()
                 .map(ItemsDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    private User getAuthenticatedUser(){
+        System.out.println("Extracted Email: " + getLoggedInUsername());
+
+        return userRepository.findByEmail(getLoggedInUsername())
+                .orElseThrow(()->new RuntimeException("User not found!!"));
+    }
+
+    private  String getLoggedInUsername(){
+        Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (principal instanceof User) ? ((User) principal).getEmail() : principal.toString();
     }
 
     public void deleteItem(Long key) {

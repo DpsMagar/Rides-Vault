@@ -38,16 +38,14 @@ public class Order {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(
             name = "order_items",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
-//    @JsonIgnore
+    @JsonIgnore // Prevents infinite recursion in serialization
     private List<Items> items;
-
-
 
     @PrePersist
     @PreUpdate
@@ -57,5 +55,11 @@ public class Order {
         }
     }
 
-
+    // Auto-remove references in the join table before deleting the order
+    @PreRemove
+    private void removeOrderReferences() {
+        for (Items item : items) {
+            item.getOrders().remove(this);
+        }
+    }
 }

@@ -9,6 +9,7 @@ import com.ridesVault.ridesVault.Repository.OrderRepo;
 import com.ridesVault.ridesVault.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,5 +48,13 @@ public class OrderService {
         return ResponseEntity.ok(orderRepo.save(order));
     }
 
+    private User getAuthenticatedUser(){
+        return userRepo.findByEmail(getLoggedInUsername())
+                .orElseThrow(()->new RuntimeException("User not found!!"));
+    }
 
+    private  String getLoggedInUsername(){
+        Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (principal instanceof User) ? ((User) principal).getEmail() : principal.toString();
+    }
 }

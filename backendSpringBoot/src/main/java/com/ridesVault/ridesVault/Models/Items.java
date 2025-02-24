@@ -20,6 +20,7 @@ public class Items {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+
     private User user;
 
     @Column(nullable = false, length = 40)
@@ -47,7 +48,7 @@ public class Items {
     private Boolean isProcessed = false;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "items")
+    @ManyToMany(mappedBy = "items", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 

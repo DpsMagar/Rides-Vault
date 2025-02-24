@@ -24,35 +24,35 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailService userDetailsService;
 
-    // Define security filter chain
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .cors(Customizer.withDefaults())  // Enable CORS
-//                .csrf(csrf -> csrf.disable())
-//                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session (JWT is stateless)
-//                .authorizeHttpRequests(auth -> auth
-////                        .requestMatchers("/api/auth/**","/api/helmet/**","/api/glove/**","/api/pant/**", "/api/jacket/**").permitAll() // Public endpoints (e.g., login, register)
-//                        .requestMatchers("/api/**","/Images/**").permitAll() // Public endpoints (e.g., login, register)
-//                        .anyRequest().authenticated() // Secure other endpoints
-//                )
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
-//
-//        return http.build();
-//    }
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .cors(Customizer.withDefaults())  // Enable CORS
-            .csrf(csrf -> csrf.disable())  // Disable CSRF (if not needed)
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session (stateless JWT)
-            .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll() // Allow all requests without authentication
-            );
+//    Define security filter chain
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(Customizer.withDefaults())  // Enable CORS
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session (JWT is stateless)
+                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/auth/**","/api/helmet/**","/api/glove/**","/api/pant/**", "/api/jacket/**").permitAll() // Public endpoints (e.g., login, register)
+                        .requestMatchers("/api/**","/Images/**").permitAll() // Public endpoints (e.g., login, register)
+                        .anyRequest().authenticated() // Secure other endpoints
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
 
-    return http.build();
-}
+        return http.build();
+    }
+//@Bean
+//public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    http
+//            .cors(Customizer.withDefaults())  // Enable CORS
+//            .csrf(csrf -> csrf.disable())  // Disable CSRF (if not needed)
+//            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No session (stateless JWT)
+//            .authorizeHttpRequests(auth -> auth
+//                    .anyRequest().permitAll() // Allow all requests without authentication
+//            );
+//
+//    return http.build();
+//}
 
     // AuthenticationManager bean for handling authentication
     @Bean
