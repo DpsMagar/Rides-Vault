@@ -48,13 +48,19 @@ public class OrderService {
         return ResponseEntity.ok(orderRepo.save(order));
     }
 
-    private User getAuthenticatedUser(){
-        return userRepo.findByEmail(getLoggedInUsername())
-                .orElseThrow(()->new RuntimeException("User not found!!"));
+    private User getAuthenticatedUser() {
+        String username= getLoggedInUser().split("Username=")[1].split(",")[0];
+
+        return userRepo.findByEmail(username)
+                .orElseThrow(()-> new RuntimeException("User not found"));
+
+    }
+    private String getLoggedInUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (principal instanceof User)?((User) principal).getEmail(): principal.toString();
     }
 
-    private  String getLoggedInUsername(){
-        Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return (principal instanceof User) ? ((User) principal).getEmail() : principal.toString();
+    public Object getOrders() {
+        return orderRepo.findByUser(getAuthenticatedUser());
     }
 }

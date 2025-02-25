@@ -38,8 +38,10 @@ public class Order {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinTable(
+//    @ManyToMany(cascade = CascadeType.ALL)
+@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+
+@JoinTable(
             name = "order_items",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")

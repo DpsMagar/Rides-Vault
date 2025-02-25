@@ -21,8 +21,8 @@ const Invoice = () => {
                 })
                 setData(response.data)
                  console.log(response.data);
-                const total = response.data[0].items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                setTotalPrice(total );
+                // const total = response.data[0].items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                setTotalPrice(50 );
                 setLoading(false)
 
             } catch (error) {

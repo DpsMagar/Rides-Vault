@@ -27,4 +27,10 @@ public class OrderController {
 
         return ResponseEntity.ok(orderService.addOrder(userId, itemIds, totalPrice));
     }
+    @GetMapping
+
+    public ResponseEntity<Object> getOrders() {
+        return ResponseEntity.ok(orderService.getOrders());
+
+    }
 }
