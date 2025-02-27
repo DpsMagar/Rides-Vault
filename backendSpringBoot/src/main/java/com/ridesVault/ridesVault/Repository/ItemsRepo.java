@@ -16,5 +16,7 @@ public interface ItemsRepo extends JpaRepository<Items, Long> {
     // Alternative way if you only have userId (Spring automatically handles the JOIN)
     List<Items> findByUserId(Long userId);
 
+    Items findByHelmetId(Integer helmetId);
+
 //    List<Items> findAllById(List<Items> items);
 }

@@ -23,6 +23,7 @@ public class ItemsDTO {
     private LocalDate addedAt;
     private BigDecimal totalPrice;
     private Boolean isProcessed;
+    private Integer helmetId;
 
     public ItemsDTO(Items item) {
         if (item != null) {
@@ -36,6 +37,7 @@ public class ItemsDTO {
             this.addedAt = item.getAddedAt();
             this.totalPrice = item.getTotalPrice();
             this.isProcessed = item.getIsProcessed();
+            this.helmetId = item.getHelmetId();
         }
     }
 //    private Integer orderId;

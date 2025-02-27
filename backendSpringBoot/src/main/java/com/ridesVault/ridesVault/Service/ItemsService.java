@@ -28,6 +28,14 @@ public class ItemsService {
         User user = userRepository.findById(itemDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Items existingItem = itemRepository.findByHelmetId(itemDTO.getHelmetId());
+
+        if( existingItem != null &&
+                itemDTO.getHelmetId().equals( existingItem.getHelmetId()) && itemDTO.getUserId().equals(existingItem.getUser().getId())){
+            existingItem.setQuantity(itemDTO.getQuantity()+existingItem.getQuantity());
+            return itemRepository.save(existingItem);
+        }
+
 
 
 
@@ -39,6 +47,7 @@ public class ItemsService {
         item.setPrice(itemDTO.getPrice());
         item.setImage(itemDTO.getImage());
         item.setTotalPrice(itemDTO.getTotalPrice());
+        item.setHelmetId(itemDTO.getHelmetId());
 
         return itemRepository.save(item);
     }

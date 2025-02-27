@@ -13,6 +13,11 @@ function Cart() {
 
   const userId= useSelector((state)=> state.user.userId);
 
+  useEffect(()=>{
+    setRefresh(prev => !prev);
+
+  },[])
+
 
   useEffect(() => {
     const fetch = async () => {
@@ -24,7 +29,7 @@ function Cart() {
         });
 
         setData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         
 
         const total = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -36,6 +41,7 @@ function Cart() {
     };
     fetch();
   }, [refresh]);
+  
 
   const handleDelete = async (itemId) => {
     try {

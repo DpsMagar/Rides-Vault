@@ -36,6 +36,9 @@ public class Items {
     private Integer price;
 
     @Column(nullable = false)
+    private Integer helmetId;
+
+    @Column(nullable = false)
     private LocalDate addedAt = LocalDate.now();
 
     @Column(nullable = false)

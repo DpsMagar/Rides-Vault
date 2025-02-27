@@ -38,7 +38,7 @@ useEffect(() => {
             const response = await axios.get(`http://localhost:8080/api/${pathsegments[1]}/${id}`);
             setData(response.data);
             setPrice(response.data.price)            
-            // console.log(response.data.image);
+            // console.log(response.data);
             
             
         } catch (error) {
@@ -58,7 +58,8 @@ const handleCart = async () => {
             itemType: pathsegments[1],
             price: price,
             image: data.image_name,
-            userId: userId
+            userId: userId,
+            helmetId:data.id,
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`

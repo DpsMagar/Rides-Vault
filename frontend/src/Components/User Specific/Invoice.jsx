@@ -14,10 +14,10 @@ const Invoice = () => {
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem("token");
-            console.log("JWT Token:", token); // Debugging
+            // console.log("JWT Token:", token); // Debugging
         
             try {
-                console.log("Making request to backend...");
+                // console.log("Making request to backend...");
                 const response = await axios.get("http://localhost:8080/user/whole-data", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const Invoice = () => {
                         Accept: "application/json"
                     },
                 });
-                console.log("Response received:", response);
+                // console.log("Response received:", response);
                 setItemsData(response.data.items);
                 setOrdersData(response.data.orders);
                 setLoading(false);
