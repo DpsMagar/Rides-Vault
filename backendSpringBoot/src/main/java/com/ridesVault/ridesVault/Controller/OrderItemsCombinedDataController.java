@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/user/wholedata/")
+//@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/user/whole-data")
 public class OrderItemsCombinedDataController {
 
     @Autowired

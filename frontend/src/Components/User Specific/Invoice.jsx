@@ -5,35 +5,50 @@ import { useState, useEffect } from 'react';
 import { Link  } from 'react-router-dom';
 
 const Invoice = () => {
-    const [data, setData]= useState([])
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [itemsData, setItemsData]= useState([])
+    const [ordersData, setOrdersData]= useState([])
+    // const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading]= useState(true)
 
 
-    useEffect(()=>{
-
-        const fetch= async ()=>{
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("token");
+            console.log("JWT Token:", token); // Debugging
+        
             try {
-                const response= await axios.get('http://localhost:8080/user/wholedata',{
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    }
-                })
-                setData(response.data)
-                 console.log(response.data);
-                // const total = response.data[0].items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                setTotalPrice(50 );
-                setLoading(false)
-
+                console.log("Making request to backend...");
+                const response = await axios.get("http://localhost:8080/user/whole-data", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    },
+                });
+                console.log("Response received:", response);
+                setItemsData(response.data.items);
+                setOrdersData(response.data.orders[0]);
+                setLoading(false);
             } catch (error) {
-                console.log(error);
-                setLoading(false)
-                
+                console.error("Error fetching data:", error);
+                setLoading(false);
             }
-        }
-        fetch();
+        };
+    
+        fetchData();
+    }, []);
 
-    },[])
+    const rawDate = ordersData.orderedAt;
+const formattedDate = new Date(rawDate).toLocaleString("en-US", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true, // Set to false for 24-hour format
+});
+    
+  
 
     if (loading) {
       return(
@@ -60,8 +75,8 @@ const Invoice = () => {
             {/* Invoice Details */}
             <div className="p-9 grid grid-cols-4 gap-12 text-sm text-slate-500">
               <div><p className="font-normal text-slate-700">Invoice Detail:</p><p>rideVault</p><p>Bagmati, Kathmandu</p><p>Baneshowr, 44600</p></div>
-              {/* <div><p className="font-normal text-slate-700">Billed To</p> <p>{data[0].user_name.charAt(0).toUpperCase() + data[0].user_name.slice(1)}</p><p>Nepal</p></div> */}
-              <div><p className="font-normal text-slate-700">Invoice Number</p><p>{data[0].order_number}</p><p className="mt-2 font-normal text-slate-700">Date of Issue</p><p>{data[0].ordered_at}</p></div>
+              {/* <div><p className="font-normal text-slate-700">Billed To</p> <p>{itemsData[0].user_name.charAt(0).toUpperCase() + itemsData[0].user_name.slice(1)}</p><p>Nepal</p></div> */}
+              <div><p className="font-normal text-slate-700">Invoice Number</p><p>{ordersData.orderNumber}</p><p className="mt-2 font-normal text-slate-700">Date of Issue</p><p>{rawDate}</p></div>
               <div><p className="font-normal text-slate-700">Terms</p><p>Due on receipt</p></div>
             </div>
 
@@ -78,19 +93,19 @@ const Invoice = () => {
                 </thead>
                 <tbody> 
                   
-                  {data[0].items.map((items)=>(
+                  {itemsData.map((items)=>(
                                 <tr className="border-b border-slate-200" key={items.id}>
                                 <td className="py-4 text-sm font-medium text-slate-700">{items.name}</td>
                                 <td className="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">{items.quantity}</td>
                                 <td className="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">{`Rs.${items.price}`}</td>
-                                <td className="py-4 text-sm text-right text-slate-500">{`Rs.${items.total_price}`}</td>
+                                <td className="py-4 text-sm text-right text-slate-500">{`Rs.${items.totalPrice}`}</td>
                               </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">Subtotal</th><td className="pt-6 text-sm text-right text-slate-500">Rs.{totalPrice}</td></tr>
+                  <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">Subtotal</th><td className="pt-6 text-sm text-right text-slate-500">Rs.{ordersData.totalPrice}</td></tr>
                   <tr><th colSpan="3" className="hidden pt-6 text-right text-sm font-light text-slate-500 sm:table-cell">{`Discount:${" "}0.00 `}</th><td className="pt-6 text-sm text-right text-slate-500">{`Shipping:${" "}RS.150`}</td></tr>
-                  <tr><th colSpan="3" className="hidden pt-4 text-right text-sm font-normal text-slate-700 sm:table-cell">Total</th><td className="pt-4 text-sm text-right text-slate-700">{totalPrice + 150}</td></tr>
+                  <tr><th colSpan="3" className="hidden pt-4 text-right text-sm font-normal text-slate-700 sm:table-cell">Total</th><td className="pt-4 text-sm text-right text-slate-700">{ordersData.totalPrice+ 150}</td></tr>
                 </tfoot>
               </table>
             </div>
