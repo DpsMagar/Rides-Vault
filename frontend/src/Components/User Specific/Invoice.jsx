@@ -27,7 +27,7 @@ const Invoice = () => {
                 });
                 console.log("Response received:", response);
                 setItemsData(response.data.items);
-                setOrdersData(response.data.orders[0]);
+                setOrdersData(response.data.orders);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -38,15 +38,18 @@ const Invoice = () => {
         fetchData();
     }, []);
 
-    const rawDate = ordersData.orderedAt;
-const formattedDate = new Date(rawDate).toLocaleString("en-US", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: true, // Set to false for 24-hour format
-});
+    const rawDate = ordersData?.orderedAt;
+    const formattedDate = rawDate
+      ? new Date(rawDate).toLocaleString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+      : "N/A";
+    
     
   
 
@@ -76,7 +79,7 @@ const formattedDate = new Date(rawDate).toLocaleString("en-US", {
             <div className="p-9 grid grid-cols-4 gap-12 text-sm text-slate-500">
               <div><p className="font-normal text-slate-700">Invoice Detail:</p><p>rideVault</p><p>Bagmati, Kathmandu</p><p>Baneshowr, 44600</p></div>
               {/* <div><p className="font-normal text-slate-700">Billed To</p> <p>{itemsData[0].user_name.charAt(0).toUpperCase() + itemsData[0].user_name.slice(1)}</p><p>Nepal</p></div> */}
-              <div><p className="font-normal text-slate-700">Invoice Number</p><p>{ordersData.orderNumber}</p><p className="mt-2 font-normal text-slate-700">Date of Issue</p><p>{rawDate}</p></div>
+              <div><p className="font-normal text-slate-700">Invoice Number</p><p>{ordersData.orderNumber}</p><p className="mt-2 font-normal text-slate-700">Date of Issue</p><p>{formattedDate}</p></div>
               <div><p className="font-normal text-slate-700">Terms</p><p>Due on receipt</p></div>
             </div>
 

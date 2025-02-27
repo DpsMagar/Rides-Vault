@@ -38,8 +38,8 @@ public class Order {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany()
+//@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 
 @JoinTable(
             name = "order_items",

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OrderItemsCombinedDataService {
@@ -31,7 +32,7 @@ public class OrderItemsCombinedDataService {
     public Map<String, Object> getWholeData() {
         User authenticatedUser = getAuthenticatedUser();
 
-        List<Order> orders = orderRepo.findByUser(authenticatedUser);
+        Optional<Order> orders = orderRepo.findByUser(authenticatedUser);
         List<Items> items = itemsRepo.findByUser(authenticatedUser);
 
         Map<String, Object> response = new HashMap<>();

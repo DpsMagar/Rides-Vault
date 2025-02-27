@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -26,8 +27,15 @@ public class OrderService {
     private ItemsRepo itemsRepo;
 
     public ResponseEntity<?> addOrder(Long userId, List<Long> itemIds, BigDecimal totalPrice) {
-        // Fetch user and validate
         User user = userRepo.findById(userId).orElse(null);
+
+        Optional<Order> existingItem= orderRepo.findByUser(user);
+
+        if(existingItem.isPresent() && !existingItem.get().getIsProcessed() ) {
+
+            orderRepo.delete(existingItem.get());
+        }
+        // Fetch user and validate
         if (user == null) {
             return ResponseEntity.badRequest().body("Invalid user ID");
         }
