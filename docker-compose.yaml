@@ -1,4 +1,13 @@
 services:
+
+  react-app:
+      build: ./frontend
+      ports:
+        - "80:80"
+      depends_on:
+        - spring_app
+      restart: always
+
   postgres_db:
     image: postgres
     container_name: postgres_container
@@ -11,8 +20,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+#      - ./ridesVaultBackupData.dump:/ridesVaultBackupData.dump
+
+
   spring_app:
-    build: .
+    build: ./backendSpringBoot
     container_name: spring_app
     ports:
       - 8080:8080
