@@ -1,0 +1,36 @@
+services:
+  postgres_db:
+    image: postgres
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ridesVault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  spring_app:
+    build: .
+    container_name: spring_app
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/ridesVault
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+
+    restart: always
+
+volumes:
+  postgres_data:
+
+
+
+
+
+
+
