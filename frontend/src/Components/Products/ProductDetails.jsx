@@ -24,7 +24,7 @@ const id= useSelector((state)=> state.currentItem?.itemType|| 1)
 const location = useLocation();
 const pathsegments= location.pathname.split('/')
 
-const excludedKeys = ['id','price','name','image','image_name','image_type', 'image_path']
+const excludedKeys = ['id','price','name','image','image_name','image_type', 'image_path','imageLink']
 
 const userId= useSelector((state)=> state.user.userId);
 

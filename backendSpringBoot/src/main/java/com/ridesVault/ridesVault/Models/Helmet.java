@@ -30,6 +30,9 @@ public class Helmet {
     @Column(length = 50, nullable = false)
     private String color;
 
+    @Column(length = 200,  columnDefinition = "VARCHAR(255) DEFAULT 'link'")
+    private String imageLink;
+
     @Column(nullable = false)
     private Integer price = 0;
 
