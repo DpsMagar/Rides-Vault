@@ -25,6 +25,7 @@ public class Jacket {
     private String image_name;
     private String image_type;
     private String image_path;
+    private String imageLink;
 
     @Override
     public String toString() {

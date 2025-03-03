@@ -21,6 +21,7 @@ public class Glove {
     private int price;
     private int stockQuantity;
     private String image_name;
+    private String imageLink;
 
     @Override
     public String toString() {

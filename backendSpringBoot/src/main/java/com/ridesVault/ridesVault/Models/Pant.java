@@ -31,6 +31,9 @@ public class Pant {
     @Column
     private Integer price = 0;
 
+    @Column
+    private String imageLink;
+
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
 

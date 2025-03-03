@@ -32,5 +32,8 @@ public class Boot {
     @Column
     private String image;
 
+    @Column
+    private String imageLink;
+
     // Getters and Setters
 }

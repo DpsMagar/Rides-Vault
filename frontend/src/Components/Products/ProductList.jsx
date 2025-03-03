@@ -53,7 +53,8 @@ function ProductList() {
                 {/* {localStorage.setItem('id', item.id)} */}
                     <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center shadow-lg hover:shadow-md hover:shadow-yellow-800'>
                         <div className='size-44 mx-auto'>
-                            <img src={`http://localhost:8080/Images/${message}/${item.image_name}`} alt="" />
+                            <img src={item.imageLink} alt="" />
+                            {/* <img src={`http://localhost:8080/Images/${message}/${item.image_name}`} alt="" /> */}
                         </div >
                         <span className='text-gray-500 w-auto mx-auto'>{item.name}</span>
                     </div>

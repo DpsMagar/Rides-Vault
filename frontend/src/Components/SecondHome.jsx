@@ -13,7 +13,7 @@ function SecondHome() {
     <div className=' h-screen bg-customColor w-screen  overflow-hidden '>
         <hr className="border-t-1 border-black w-full mb-10" />
         <div className='text-5xl mx-5'>
-            <b>Explore our products:</b>
+            <b>Explore our productss:</b>
         </div>
             <div className="flex items-center justify-evenly  h-52 my-10">
                 <button className="relative group p-5">
