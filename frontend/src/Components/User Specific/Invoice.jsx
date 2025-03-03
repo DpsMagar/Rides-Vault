@@ -18,7 +18,7 @@ const Invoice = () => {
         
             try {
                 // console.log("Making request to backend...");
-                const response = await axios.get("http://localhost:8080/user/whole-data", {
+                const response = await axios.get("https://rides-vault.onrender.com/user/whole-data", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",

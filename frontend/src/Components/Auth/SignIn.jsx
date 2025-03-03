@@ -23,7 +23,7 @@ const SignIn = () => {
     const handleSubmit= async (e)=>{
       e.preventDefault();
       try{
-          const response= await axios.post('http://localhost:8080/api/auth/login',{
+          const response= await axios.post('https://rides-vault.onrender.com/api/auth/login',{
             email: email,
             password: password
           })

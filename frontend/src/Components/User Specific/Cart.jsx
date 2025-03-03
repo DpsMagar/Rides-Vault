@@ -22,7 +22,7 @@ function Cart() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/user/items', {
+        const response = await axios.get('https://rides-vault.onrender.com/user/items', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           }
@@ -45,7 +45,7 @@ function Cart() {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8080/user/items/${itemId}`, {
+      await axios.delete(`https://rides-vault.onrender.com/user/items/${itemId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -75,7 +75,7 @@ function Cart() {
     
 
     try {
-      await axios.post('http://localhost:8080/user/order', 
+      await axios.post('https://rides-vault.onrender.com/user/order', 
       {userId: userId,
         items: itemIds,  
         totalPrice: totalPrice,
@@ -113,7 +113,7 @@ function Cart() {
                     <li key={item.id} className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
                       <div className="shrink-0 relative">
                         <span className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-full border bg-customColor text-sm font-medium text-white shadow sm:-top-2 sm:-right-2">{item.quantity}</span>
-                        <img className="h-24 w-24 max-w-full rounded-lg object-cover" src={`http://localhost:8080/Images/${item.itemType}/${item.image}`} alt="Image Here" />
+                        <img className="h-24 w-24 max-w-full rounded-lg object-cover" src={`https://rides-vault.onrender.com/Images/${item.itemType}/${item.image}`} alt="Image Here" />
                       </div>
 
                       <div className="relative flex flex-1 flex-col justify-between">

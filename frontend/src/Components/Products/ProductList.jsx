@@ -18,7 +18,7 @@ function ProductList() {
         const fetchData = async () => {
             try {
                 // const response = await axios.get(`http://127.0.0.1:8000/api/${message}/`);
-                const response = await axios.get(`http://localhost:8080/api/${message}`);
+                const response = await axios.get(`https://rides-vault.onrender.com/api/${message}`);
                 console.log(message);
                 
                 setData(response.data);
