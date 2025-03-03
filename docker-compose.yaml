@@ -31,9 +31,9 @@ services:
     depends_on:
       - postgres_db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/ridesVault
+      SPRING_DATASOURCE_URL: jdbc:postgresql://caboose.proxy.rlwy.net:24514/railway
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_PASSWORD: MMAplzgipqvxuJFaAPiugzupygeARoFJ
 
     restart: always
 
