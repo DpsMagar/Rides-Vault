@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setItemName } from '../Store/CurrentItem';
-
+// import {API_BASE_URL} from '../../fetches/api'
 
 function ProductList() {
     const[data, setData]= useState([])
@@ -19,6 +19,7 @@ function ProductList() {
             try {
                 // const response = await axios.get(`http://127.0.0.1:8000/api/${message}/`);
                 const response = await axios.get(`https://rides-vault.onrender.com/api/${message}`);
+                // const response = await axios.get(`${API_BASE_URL}/api/${message}`);
                 console.log(message);
                 
                 setData(response.data);

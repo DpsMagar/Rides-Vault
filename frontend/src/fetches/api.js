@@ -1,6 +1,3 @@
-const API_URL =
-  window.location.hostname === "localhost"
-    ? process.env.REACT_APP_API_URL_LOCAL
-    : process.env.REACT_APP_API_URL_PROD;
+export const API_BASE_URL = process.env.REACT_APP_API_URL
 
 console.log("Using API URL:", API_URL);
