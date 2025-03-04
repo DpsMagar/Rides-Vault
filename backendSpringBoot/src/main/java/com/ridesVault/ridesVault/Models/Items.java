@@ -47,6 +47,9 @@ public class Items {
     @Column
     private String image;
 
+    @Column
+    private String imageLink;
+
     @Column(nullable = false)
     private Boolean isProcessed = false;
 

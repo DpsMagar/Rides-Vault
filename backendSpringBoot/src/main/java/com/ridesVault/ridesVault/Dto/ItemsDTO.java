@@ -24,6 +24,7 @@ public class ItemsDTO {
     private BigDecimal totalPrice;
     private Boolean isProcessed;
     private Integer helmetId;
+    private String imageLink;
 
     public ItemsDTO(Items item) {
         if (item != null) {
@@ -38,6 +39,7 @@ public class ItemsDTO {
             this.totalPrice = item.getTotalPrice();
             this.isProcessed = item.getIsProcessed();
             this.helmetId = item.getHelmetId();
+            this.imageLink = item.getImageLink();
         }
     }
 //    private Integer orderId;

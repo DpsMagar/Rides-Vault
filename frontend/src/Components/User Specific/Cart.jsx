@@ -13,10 +13,7 @@ function Cart() {
 
   const userId= useSelector((state)=> state.user.userId);
 
-  useEffect(()=>{
-    setRefresh(prev => !prev);
-
-  },[])
+ 
 
 
   useEffect(() => {
@@ -41,6 +38,11 @@ function Cart() {
     };
     fetch();
   }, [refresh]);
+
+  useEffect(()=>{
+    setRefresh(prev => !prev);
+
+  },[])
   
 
   const handleDelete = async (itemId) => {

@@ -48,9 +48,11 @@ public class ItemsService {
         item.setImage(itemDTO.getImage());
         item.setTotalPrice(itemDTO.getTotalPrice());
         item.setHelmetId(itemDTO.getHelmetId());
+        item.setImageLink(itemDTO.getImageLink());
 
         return itemRepository.save(item);
     }
+
 
     public List<ItemsDTO> getItems() {
 

@@ -60,6 +60,7 @@ const handleCart = async () => {
             image: data.image_name,
             userId: userId,
             helmetId:data.id,
+            imageLink: data.imageLink
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
