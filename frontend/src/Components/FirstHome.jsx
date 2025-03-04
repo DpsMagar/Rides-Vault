@@ -3,8 +3,10 @@ import Logo from './Logo'
 import poster from '../Images/poster.jpg'
 import logo from '../Images/PrimaryLogo.png'
 import { Link } from 'react-router-dom'
+import FuzzyText from '../FuzzyText/FuzzyText'
 
 function FirstHome() {
+    const hoverIntensity = 0.5; 
   return (
     <div className='w-screen h-screen bg-customColor  p-3 flex overflow-hidden '>
         <div className='flex  h-screen w-1/2 rounded-tr-3xl'>
@@ -15,7 +17,13 @@ function FirstHome() {
                     <img src={logo} alt=""  className='size-20 mx-2'/>
                  </button>
             </div>
-            <div className=' h-1/2 flex flex-col gap-2 my-52'>
+  
+                <div className='text-red-500 text-xl absolute mx-7 '>
+                <FuzzyText baseIntensity={0.2} hoverIntensity={hoverIntensity} enableHover={true}>
+                Please note: Due to free hosting limitations, data fetching may take up to a minute.            </FuzzyText>
+                </div>
+
+            <div className=' h-1/2 flex flex-col gap-2 my-52 '>
                 <div className='text-7xl font-courier flex flex-col items-center my-8 justify-center'>
                     <div>YOUR JOURNEY,</div>
                     <div>SECURED</div>
@@ -24,14 +32,13 @@ function FirstHome() {
                     <div >We provide top-quality motorcycle gears    </div>
                     <div>to help you enhance your ride and ensure </div>
                     <div>peak safety and comfort </div>
-                    <div className='text-red-100'>Note: Backend and databases are using free hosting services so might take minute or so to load the data </div>
 
                 </div>
             </div>
         </div>
 
         <div className='   '>
-            <div className='flex absolute gap-9 bg-customColor mx-[525px] z-10 font-courier w-auto my-0 rounded-xl rounded-tl-none h-12  text-xl font-bold'>
+            <div className='flex absolute gap-9 bg-customColor mx-[525px] z-10 font-courier w-auto my-0 rounded-xl rounded-tl-none h-12  text-xl font-bold text'>
                 <Link to="/user/login">
                     <button className="mx-2 hover:underline">SignIn</button>
                 </Link>
