@@ -24,6 +24,7 @@ function FirstHome() {
                     <div >We provide top-quality motorcycle gears    </div>
                     <div>to help you enhance your ride and ensure </div>
                     <div>peak safety and comfort </div>
+                    <div>Note: Backend and databases are using free hosting services so might take minutes or so to load the data </div>
 
                 </div>
             </div>
