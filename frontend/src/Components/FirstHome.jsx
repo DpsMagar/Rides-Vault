@@ -4,6 +4,7 @@ import poster from '../Images/poster.jpg'
 import logo from '../Images/PrimaryLogo.png'
 import { Link } from 'react-router-dom'
 import FuzzyText from '../FuzzyText/FuzzyText'
+import BlurText from '../FuzzyText/BlurText'
 
 function FirstHome() {
     const hoverIntensity = 0.5; 
@@ -18,10 +19,16 @@ function FirstHome() {
                  </button>
             </div>
   
-                <div className='text-red-500 text-xl absolute mx-7 '>
-                <FuzzyText baseIntensity={0.2} hoverIntensity={hoverIntensity} enableHover={true}>
-                Please note: Due to free hosting limitations, data fetching may take up to a minute.            </FuzzyText>
+                <div className='text-red-500 text-xl absolute mx-28 mt-4 '>
+                <BlurText
+                    text="Please note: Due to free hosting limitations, data fetching may take up to a minute."
+                    delay={150}
+                    animateBy="words"
+                    direction="top"
+                    />
                 </div>
+
+
 
             <div className=' h-1/2 flex flex-col gap-2 my-52 '>
                 <div className='text-7xl font-courier flex flex-col items-center my-8 justify-center'>
