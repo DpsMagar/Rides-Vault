@@ -30,10 +30,12 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Items> items;

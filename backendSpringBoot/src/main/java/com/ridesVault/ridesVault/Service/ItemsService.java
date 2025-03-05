@@ -27,14 +27,21 @@ public class ItemsService {
 
         User user = userRepository.findById(itemDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        System.out.println("Searching for item with name: " + itemDTO.getName());
 
-        Items existingItem = itemRepository.findByName(itemDTO.getName());
 
-        if( existingItem != null &&
-                itemDTO.getItemId().equals( existingItem.getItemId()) && itemDTO.getUserId().equals(existingItem.getUser().getId())){
-            existingItem.setQuantity(itemDTO.getQuantity()+existingItem.getQuantity());
+        Items existingItem = itemRepository.findByItemId(itemDTO.getItemId());
+        System.out.println("Found item: " + existingItem);
+
+        if (existingItem != null &&
+                itemDTO.getItemId() != null &&
+                itemDTO.getItemId().equals(existingItem.getItemId()) &&
+                itemDTO.getUserId() != null &&
+                itemDTO.getUserId().equals(existingItem.getUser().getId())) {
+            existingItem.setQuantity(itemDTO.getQuantity() + existingItem.getQuantity());
             return itemRepository.save(existingItem);
         }
+
 
 
 

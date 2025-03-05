@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -53,6 +54,7 @@ public class Items {
     @Column(nullable = false)
     private Boolean isProcessed = false;
 
+    @ToString.Exclude
     @JsonIgnore
     @ManyToMany(mappedBy = "items", cascade = CascadeType.ALL)
     private List<Order> orders;
