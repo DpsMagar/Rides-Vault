@@ -18,15 +18,6 @@ function FirstHome() {
                     <img src={logo} alt=""  className='size-20 mx-2'/>
                  </button>
             </div>
-  
-                <div className='text-red-500 text-xl absolute mx-28 mt-4 '>
-                <BlurText
-                    text="Please note: Due to free hosting limitations, data fetching may take up to a minute."
-                    delay={150}
-                    animateBy="words"
-                    direction="top"
-                    />
-                </div>
 
 
 

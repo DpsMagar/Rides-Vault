@@ -18,6 +18,7 @@ const BlurText = ({
   const [inView, setInView] = useState(false);
   const ref = useRef();
   const animatedCount = useRef(0);
+  
 
   const defaultFrom =
     direction === 'top'
