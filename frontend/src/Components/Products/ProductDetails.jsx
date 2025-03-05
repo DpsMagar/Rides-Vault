@@ -39,7 +39,7 @@ useEffect(() => {
     const fetchData = async () => {
         try {
             const response = await axios.get(`https://rides-vault.onrender.com/api/${pathsegments[1]}/${id}`);
-            // console.log(response.data);
+            console.log(response.data);
             setData(response.data);
             setPrice(response.data.price)            
             
@@ -62,7 +62,7 @@ const handleCart = async () => {
             price: price,
             image: data.image_name,
             userId: userId,
-            itemId:data.itemId,
+            itemId:data.id,
             imageLink: data.imageLink
         }, {
             headers: {
