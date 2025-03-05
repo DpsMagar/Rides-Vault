@@ -23,7 +23,7 @@ public class ItemsDTO {
     private LocalDate addedAt;
     private BigDecimal totalPrice;
     private Boolean isProcessed;
-    private Integer helmetId;
+    private Integer itemId;
     private String imageLink;
 
     public ItemsDTO(Items item) {
@@ -38,7 +38,7 @@ public class ItemsDTO {
             this.addedAt = item.getAddedAt();
             this.totalPrice = item.getTotalPrice();
             this.isProcessed = item.getIsProcessed();
-            this.helmetId = item.getHelmetId();
+            this.itemId = item.getItemId();
             this.imageLink = item.getImageLink();
         }
     }

@@ -18,7 +18,8 @@ const [data, setData] = useState([])
 // const {state: id}= useLocation();
 // const id=localStorage.getItem('id')
 const navigate = useNavigate();
-const id= useSelector((state)=> state.currentItem?.itemType|| 1)
+// const id= useSelector((state)=> state.currentItem?.itemType|| 18)
+const id = localStorage.getItem("item_id")
 
 
 const location = useLocation();
@@ -31,14 +32,16 @@ const userId= useSelector((state)=> state.user.userId);
 
 
 
-useEffect(() => {
+// console.log(`https://rides-vault.onrender.com/api/${pathsegments[1]}/${id}`);
 
+useEffect(() => {
+    
     const fetchData = async () => {
         try {
             const response = await axios.get(`https://rides-vault.onrender.com/api/${pathsegments[1]}/${id}`);
+            // console.log(response.data);
             setData(response.data);
             setPrice(response.data.price)            
-            console.log(response.data);
             
             
         } catch (error) {
@@ -59,7 +62,7 @@ const handleCart = async () => {
             price: price,
             image: data.image_name,
             userId: userId,
-            helmetId:data.id,
+            itemId:data.id,
             imageLink: data.imageLink
         }, {
             headers: {

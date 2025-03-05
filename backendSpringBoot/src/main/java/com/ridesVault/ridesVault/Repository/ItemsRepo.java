@@ -18,5 +18,9 @@ public interface ItemsRepo extends JpaRepository<Items, Long> {
 
     Items findByHelmetId(Integer helmetId);
 
+    Items findByItemId(Integer itemId);
+
+    Items findByName(String name);
+
 //    List<Items> findAllById(List<Items> items);
 }
