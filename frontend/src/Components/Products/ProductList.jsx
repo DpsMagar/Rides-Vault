@@ -44,6 +44,15 @@ function ProductList() {
         dispatch(setItemName(id))
 
     }
+    const [showWarning, setShowWarning] = useState(false);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setShowWarning(true);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId); // Cleanup on unmount
+    }, []);
     
     
     
@@ -52,7 +61,8 @@ function ProductList() {
       
       <div className='min-h-screen bg-customColor max-w-screen p-10 overflow-hidden'>
         {/* <div className='text-7xl font-teko'>{message.charAt(0).toUpperCase() + message.slice(1)}s:</div>     */}
-        {loading? <div className='text-red-500 text-xl absolute mx-28 mt-4 '>
+        {loading?(showWarning &&
+                <div className='text-red-500 text-xl absolute mx-80 mt-52 '>
                 <BlurText
                     text="Please note: Due to free hosting limitations, data fetching may take up to a minute."
                     delay={50}
@@ -61,6 +71,9 @@ function ProductList() {
 
                     
                 </div>
+        )
+            
+        
                 :<div className='p-3 mx-9 mt-1 h-full w-full flex flex-wrap justify-start gap-7'>
 
                         {data.map((item)=>(
@@ -71,7 +84,7 @@ function ProductList() {
                                         <img src={item.imageLink} alt="" />
                                         {/* <img src={`http://localhost:8080/Images/${message}/${item.image_name}`} alt="" /> */}
                                     </div >
-                                    <span className='text-gray-500 w-auto mx-auto'>{item.name}</span>
+                                    <span className='text-white w-auto mx-auto'>{item.name}</span>
                                 </div>
                             </Link>
                         ))}

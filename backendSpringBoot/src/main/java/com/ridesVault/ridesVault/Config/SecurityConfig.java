@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
-                    config.setAllowedOrigins(List.of("https://rides-vault.vercel.app/","http://localhost:5173/"));
+                    config.setAllowedOrigins(List.of("https://rides-vault.vercel.app/","http://localhost:5173/","https://rides-vault-mifl4e5qz-dipesh-magars-projects.vercel.app/"));
 //                    config.setAllowedOrigins(List.of("*"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
