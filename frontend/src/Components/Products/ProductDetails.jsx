@@ -62,7 +62,7 @@ const handleCart = async () => {
             price: price,
             image: data.image_name,
             userId: userId,
-            itemId:data.id,
+            itemId:data.itemId,
             imageLink: data.imageLink
         }, {
             headers: {
