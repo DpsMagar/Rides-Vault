@@ -30,7 +30,7 @@ public class ItemsService {
         System.out.println("Searching for item with name: " + itemDTO.getName());
 
 
-        Items existingItem = itemRepository.findByItemId(itemDTO.getItemId());
+        Items existingItem = itemRepository.findByName(itemDTO.getName());
         System.out.println("Found item: " + existingItem);
 
         if (existingItem != null &&
@@ -41,7 +41,6 @@ public class ItemsService {
             existingItem.setQuantity(itemDTO.getQuantity() + existingItem.getQuantity());
             return itemRepository.save(existingItem);
         }
-
 
 
 
