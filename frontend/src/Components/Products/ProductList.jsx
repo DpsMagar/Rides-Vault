@@ -78,7 +78,7 @@ function ProductList() {
 
                         {data.map((item)=>(
                             <Link to={`/${message}/details`} state={item.id} onClick={()=>onItemCLick(item.id)} key={item.id}>
-                            {localStorage.setItem('item_id', item.id)}
+                            {/* {localStorage.setItem('item_id', item.id)} */}
                                 <div className='bg-yellow-950 rounded-lg size-60 flex flex-col justify-center shadow-lg hover:shadow-md hover:shadow-yellow-800'>
                                     <div className='size-44 mx-auto'>
                                         <img src={item.imageLink} alt="" />

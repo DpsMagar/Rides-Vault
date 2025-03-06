@@ -16,10 +16,10 @@ const [quantity, setQuantity] = useState(1);
 const [price, setPrice]= useState(0)
 const [data, setData] = useState([])
 // const {state: id}= useLocation();
-// const id=localStorage.getItem('id')
+const id=localStorage.getItem('id')
 const navigate = useNavigate();
 // const id= useSelector((state)=> state.currentItem?.itemType|| 18)
-const id = localStorage.getItem("item_id")
+// const id = localStorage.getItem("item_id")
 
 
 const location = useLocation();
