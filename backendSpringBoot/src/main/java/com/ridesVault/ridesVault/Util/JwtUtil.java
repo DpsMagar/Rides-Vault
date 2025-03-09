@@ -1,19 +1,25 @@
 package com.ridesVault.ridesVault.Util;
 
+import com.ridesVault.ridesVault.Models.User;
+import com.ridesVault.ridesVault.Repository.UserRepo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    @Autowired
+    private UserRepo userRepo;
 
     // Generate a secure 256-bit key for HS256 signing
     private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -21,6 +27,12 @@ public class JwtUtil {
     // Extract username (email) from the JWT
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    // Extract userId from the token
+    public Long extractUserId(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("id", Long.class);
     }
 
     // Extract expiration date from the JWT
@@ -55,9 +67,12 @@ public class JwtUtil {
     }
 
     // Generate a JWT token for a given user email
-    public String generateToken(String email) {
+    public String generateToken(User user) {
+        Optional<User> currentUser= userRepo.findByEmail(user.getEmail());
+        System.out.println(user);
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(user.getEmail())
+                .claim("id", currentUser.get().getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours expiration
                 .signWith(SECRET_KEY)  // Sign with the securely generated key

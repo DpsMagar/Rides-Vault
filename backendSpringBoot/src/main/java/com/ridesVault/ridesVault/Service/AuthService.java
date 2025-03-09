@@ -32,14 +32,14 @@ public class AuthService {
         userRepository.save(user);
 
         // Generate and return the JWT token
-        return jwtUtil.generateToken(user.getEmail());  // This is fine, you're returning the JWT to the frontend
+        return jwtUtil.generateToken( user);  // This is fine, you're returning the JWT to the frontend
     }
 
 
-    public Optional<AuthResponseDTO> authenticate(String email, String password) {
-        return userRepository.findByEmail(email)
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(user -> new AuthResponseDTO(jwtUtil.generateToken(email), user.getId()));  // return JWT token and useID
+    public Optional<AuthResponseDTO> authenticate(User user) {
+        return userRepository.findByEmail(user.getEmail())
+                .filter(authUser -> passwordEncoder.matches(user.getPassword(), authUser.getPassword()))
+                .map(authUser -> new AuthResponseDTO(jwtUtil.generateToken(user), authUser.getId()));  // return JWT token and useID
     }
 
 }
