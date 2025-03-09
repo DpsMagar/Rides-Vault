@@ -13,8 +13,6 @@ function Cart() {
 
   const userId= useSelector((state)=> state.user.userId);
 
- 
-
 
   useEffect(() => {
     const fetch = async () => {

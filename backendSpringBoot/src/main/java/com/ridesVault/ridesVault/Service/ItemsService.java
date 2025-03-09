@@ -5,10 +5,12 @@ import com.ridesVault.ridesVault.Models.Items;
 import com.ridesVault.ridesVault.Models.User;
 import com.ridesVault.ridesVault.Repository.ItemsRepo;
 import com.ridesVault.ridesVault.Repository.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,11 +18,13 @@ public class ItemsService {
 
     private final ItemsRepo itemRepository;
     private final UserRepo userRepository;
+    private final ItemsRepo itemsRepo;
 
 
-    public ItemsService(ItemsRepo itemRepository, UserRepo userRepository) {
+    public ItemsService(ItemsRepo itemRepository, UserRepo userRepository, ItemsRepo itemsRepo) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
+        this.itemsRepo = itemsRepo;
     }
 
     public Items addItem(ItemsDTO itemDTO) {
@@ -89,6 +93,15 @@ public class ItemsService {
 //}
 
     public void deleteItem(Long key) {
-        itemRepository.deleteById(key);
+        Optional<Items> item = itemRepository.findById(key);
+
+        if (item.isPresent()) {
+            Items deletableItem = item.get();
+            itemRepository.delete(deletableItem);
+        }
+        else{
+            throw new EntityNotFoundException("Item not found with id: " + key);
+        }
+//        itemRepository.deleteById(key);
     }
 }
