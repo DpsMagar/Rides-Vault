@@ -92,6 +92,7 @@ public class ItemsService {
 
     public void deleteItem(Long key) {
         Optional<Items> item = itemsRepo.findById(key);
+        System.out.println(key);
 
         if (item.isPresent()) {
             Items deletableItem = item.get();

@@ -35,6 +35,7 @@ function Cart() {
       }
     };
     fetch();
+    setRefresh(prev => !prev);
   }, [refresh]);
 
   useEffect(()=>{

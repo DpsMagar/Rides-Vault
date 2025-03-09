@@ -76,6 +76,14 @@ const handleCart = async () => {
     }
 };
 
+const handleWishlist= ()=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 
 
 const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(items[0]))
@@ -147,6 +155,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                 onClick={
                     ()=>
                     userId?
+                    (handleWishlist(),
                     toast.success("Added to Wishlist",{
                     style: {
                         backgroundColor: "#52281c", 
@@ -159,7 +168,7 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
                       progressStyle: {
                         backgroundColor: "#4a281e", 
                       },
-                }):
+                })):
                 navigate('/user/login',{state:{from:location.pathname}})
                 }><img src={wishlistt} alt="wishlist" className='size-7' /></button>
             </div>
