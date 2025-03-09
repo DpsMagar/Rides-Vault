@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 @Service
 public class ItemsService {
 
-    private final ItemsRepo itemRepository;
+//    private final ItemsRepo itemRepository;
     private final UserRepo userRepository;
     private final ItemsRepo itemsRepo;
 
 
     public ItemsService(ItemsRepo itemRepository, UserRepo userRepository, ItemsRepo itemsRepo) {
-        this.itemRepository = itemRepository;
+//        this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.itemsRepo = itemsRepo;
     }
@@ -34,7 +34,7 @@ public class ItemsService {
         System.out.println("Searching for item with name: " + itemDTO.getName());
 
 
-        Items existingItem = itemRepository.findByName(itemDTO.getName());
+        Items existingItem = itemsRepo.findByName(itemDTO.getName());
         System.out.println("Found item: " + existingItem);
 
         if (existingItem != null &&
@@ -43,10 +43,8 @@ public class ItemsService {
                 itemDTO.getUserId() != null &&
                 itemDTO.getUserId().equals(existingItem.getUser().getId())) {
             existingItem.setQuantity(itemDTO.getQuantity() + existingItem.getQuantity());
-            return itemRepository.save(existingItem);
+            return itemsRepo.save(existingItem);
         }
-
-
 
 
         Items item = new Items();
@@ -60,14 +58,14 @@ public class ItemsService {
         item.setItemId(itemDTO.getItemId());
         item.setImageLink(itemDTO.getImageLink());
 
-        return itemRepository.save(item);
+        return itemsRepo.save(item);
     }
 
 
     public List<ItemsDTO> getItems() {
 
 
-        return itemRepository.findByUser(getAuthenticatedUser()).stream()
+        return itemsRepo.findByUser(getAuthenticatedUser()).stream()
                 .map(ItemsDTO::new)
                 .collect(Collectors.toList());
     }
@@ -93,11 +91,11 @@ public class ItemsService {
 //}
 
     public void deleteItem(Long key) {
-        Optional<Items> item = itemRepository.findById(key);
+        Optional<Items> item = itemsRepo.findById(key);
 
         if (item.isPresent()) {
             Items deletableItem = item.get();
-            itemRepository.delete(deletableItem);
+            itemsRepo.delete(deletableItem);
         }
         else{
             throw new EntityNotFoundException("Item not found with id: " + key);
