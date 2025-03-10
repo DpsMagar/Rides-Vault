@@ -14,8 +14,12 @@ public class Wishlist {
 
     private String name;
     private String price;
+    private Integer itemId;
+    private String imageLink;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }
+
+

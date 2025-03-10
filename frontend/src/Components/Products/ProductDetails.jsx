@@ -76,13 +76,26 @@ const handleCart = async () => {
     }
 };
 
-const handleWishlist= ()=>{
+const handleWishlist= async ()=>{
     try {
-        
+            await axios.post('https://rides-vault.onrender.com/user/wishlist', {
+                name: data.name,
+                price:price,
+                itemId:data.id,
+                userId:userId,
+                imageLink:data.imageLink
+            },{
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log("Item added to wishlist!");
+            
     } catch (error) {
+        console.error("Error posting!:", error);
         
     }
-}
+};
 
 
 
