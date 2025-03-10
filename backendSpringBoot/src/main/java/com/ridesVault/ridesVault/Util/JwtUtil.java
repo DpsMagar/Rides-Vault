@@ -69,7 +69,7 @@ public class JwtUtil {
     // Generate a JWT token for a given user email
     public String generateToken(User user) {
         Optional<User> currentUser= userRepo.findByEmail(user.getEmail());
-        System.out.println(user);
+//        System.out.println(user);
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("id", currentUser.get().getId())

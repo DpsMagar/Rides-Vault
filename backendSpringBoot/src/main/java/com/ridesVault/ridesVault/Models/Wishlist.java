@@ -15,5 +15,7 @@ public class Wishlist {
     private String name;
     private String price;
 
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
