@@ -32,6 +32,7 @@ const SignIn = () => {
           const {token, userId}= response.data;
           localStorage.setItem("token",token)
           localStorage.setItem("userId",userId)
+          sessionStorage.setItem("UserId", userId)
           console.log("Logged in successfully");
           dispatch(setuserId(userId))
           navigate(from)

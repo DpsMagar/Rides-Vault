@@ -12,6 +12,9 @@ function ProductList() {
     const {state: message}= useLocation();
     const dispatch = useDispatch()
     const[loading, setLoading]= useState(true)
+    const userId= localStorage.getItem('userId')
+
+    const sessionuserId= sessionStorage.getItem('UserId')
     
     
 
@@ -60,6 +63,7 @@ function ProductList() {
   return (
       
       <div className='min-h-screen bg-customColor max-w-screen p-10 overflow-hidden'>
+        
         {/* <div className='text-7xl font-teko'>{message.charAt(0).toUpperCase() + message.slice(1)}s:</div>     */}
         {loading?(showWarning &&
                 <div className='text-red-500 text-xl absolute mx-80 mt-52 '>
@@ -75,6 +79,11 @@ function ProductList() {
             
         
                 :<div className='p-3 mx-9 mt-1 h-full w-full flex flex-wrap justify-start gap-7'>
+                    <div className='absolute top right-7 '>
+                         {sessionuserId ?<Link to="/user/wishlist">
+                            <a href="# " className='hover:underline'>WishList</a>
+                        </Link>:<Link to="/"></Link>}
+                     </div>
 
                         {data.map((item)=>(
                             <Link to={`/${message}/details`} state={item.id} onClick={()=>onItemCLick(item.id)} key={item.id}>

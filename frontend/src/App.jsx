@@ -12,7 +12,7 @@ import SignUp from "./Components/Auth/SignUp";
 import LogOut from "./Components/Auth/LogOut";
 import Invoice from "./Components/User Specific/Invoice";
 import WishList from "./Components/User Specific/WishList";
-import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
+// import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 
 const App = () => {
   const location = useLocation();
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      {!nolocation.includes(location.pathname) && <Breadcrumb />}
+      {/* {!nolocation.includes(location.pathname) && <Breadcrumb />} */}
       
       <Routes>
         <Route path="/" element={<Home />} />

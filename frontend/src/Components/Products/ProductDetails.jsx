@@ -105,6 +105,11 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
 
   return (
     <div className='w-screen h-screen bg-customColor flex overflow-hidden p-5 text-white'>
+        <div className='absolute top right-7 '>
+                    <Link to="/user/wishlist">
+                        <a href="# " className='hover:underline'>WishList</a>
+                    </Link>
+        </div>
         <Link to='/'> <img src={logo} alt="" className='absolute'/> </Link>
         <div className='mt-44'>
             <img src={data.imageLink} alt="" className='size-[300px] rounded-e-md ' />
