@@ -82,7 +82,7 @@ const handleWishlist= async ()=>{
                 name: data.name,
                 price:price,
                 itemId:data.id,
-                userId:userId,
+                user:{id: userId},
                 imageLink:data.imageLink
             }, {
                 headers: {

@@ -22,8 +22,11 @@ public class WishlistService {
 
 //    long userId= JwtUtil.extractUserId()
     public Wishlist postWishlist(Wishlist wishlist) {
+//        User user= userRepo.findById(wishlist)
+//                .orElseThrow(()->new RuntimeException("User Not Found"));
        return wishlistRepo.save(wishlist);
     }
+//    Wishlist existingWishlist= wishlistRepo.findByName(wishlist.getName());
 
     public List<Wishlist> getWishlists(Long id) {
         return wishlistRepo.findByUserId(id);

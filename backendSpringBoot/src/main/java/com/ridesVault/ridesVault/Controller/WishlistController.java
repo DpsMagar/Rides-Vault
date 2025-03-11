@@ -18,7 +18,8 @@ public class WishlistController {
     private JwtUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity<?> addWishlist(Wishlist wishlist) {
+    public ResponseEntity<?> addWishlist(@RequestBody Wishlist wishlist) {
+        System.out.println("the id of the current user is:"+wishlist.getUser().getId());
         return ResponseEntity.ok(wishlistService.postWishlist(wishlist));
     }
 
