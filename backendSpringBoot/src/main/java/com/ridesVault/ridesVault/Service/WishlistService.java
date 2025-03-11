@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WishlistService {
@@ -19,17 +20,22 @@ public class WishlistService {
 
     @Autowired
     private UserRepo userRepo;
-
-//    long userId= JwtUtil.extractUserId()
     public Wishlist postWishlist(Wishlist wishlist) {
-//        User user= userRepo.findById(wishlist)
-//                .orElseThrow(()->new RuntimeException("User Not Found"));
-       return wishlistRepo.save(wishlist);
+        Optional<Wishlist> existingWishlist= wishlistRepo.findByUserIdAndItemId(wishlist.getUser().getId(), wishlist.getItemId());
+        return existingWishlist.orElseGet(() -> wishlistRepo.save(wishlist));
     }
-//    Wishlist existingWishlist= wishlistRepo.findByName(wishlist.getName());
 
     public List<Wishlist> getWishlists(Long id) {
         return wishlistRepo.findByUserId(id);
     }
 
+    public void deleteWishlist(Long userId, Integer itemId) {
+        Optional<Wishlist> existingWishlist= wishlistRepo.findByUserIdAndItemId(userId, itemId);
+        if (existingWishlist.isPresent()) {
+            wishlistRepo.delete(existingWishlist.get());
+        }
+        else {
+            System.out.println("Wishlist not found");
+        }
+    }
 }

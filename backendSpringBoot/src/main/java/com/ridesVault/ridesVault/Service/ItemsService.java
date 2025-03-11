@@ -31,11 +31,11 @@ public class ItemsService {
 
         User user = userRepository.findById(itemDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println("Searching for item with name: " + itemDTO.getName());
+//        System.out.println("Searching for item with name: " + itemDTO.getName());
 
 
         Items existingItem = itemsRepo.findByName(itemDTO.getName());
-        System.out.println("Found item: " + existingItem);
+//        System.out.println("Found item: " + existingItem);
 
         if (existingItem != null &&
                 itemDTO.getItemId() != null &&

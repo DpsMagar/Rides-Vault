@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("user/wishlist")
+@RequestMapping("/user/wishlist")
 public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
@@ -19,7 +21,8 @@ public class WishlistController {
 
     @PostMapping
     public ResponseEntity<?> addWishlist(@RequestBody Wishlist wishlist) {
-        System.out.println("the id of the current user is:"+wishlist.getUser().getId());
+//        System.out.println("hi");
+//        System.out.println("the id of the current user is:" +wishlist.getUser().getId());
         return ResponseEntity.ok(wishlistService.postWishlist(wishlist));
     }
 
@@ -38,4 +41,10 @@ public class WishlistController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token format");
         }
     }
+    @DeleteMapping("/{userId}/{itemId}")
+    public void deleteWishlist(@PathVariable Long userId, @PathVariable Integer itemId) {
+        System.out.println(userId + itemId);
+         wishlistService.deleteWishlist(userId, itemId);
+    };
+
 }
