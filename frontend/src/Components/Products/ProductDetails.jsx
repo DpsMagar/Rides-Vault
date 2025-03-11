@@ -84,8 +84,8 @@ const handleWishlist= async ()=>{
                 itemId:data.id,
                 userId:userId,
                 imageLink:data.imageLink
-            },{
-                headers:{
+            }, {
+                headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
