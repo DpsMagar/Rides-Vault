@@ -28,12 +28,15 @@ public class WishlistController {
 
     @GetMapping
     public ResponseEntity<?> getAllWishlist(@RequestHeader("Authorization") String token) {
+        System.out.println(token);
         try {
             if (!token.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token format");
             }
             String jwt= token.substring(7);
             Long userId= jwtUtil.extractUserId(jwt);
+            System.out.println("-----------------------------------");
+            System.out.println(userId);
 
             return ResponseEntity.ok(wishlistService.getWishlists(userId));
         }

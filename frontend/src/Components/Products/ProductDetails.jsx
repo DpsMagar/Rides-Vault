@@ -106,7 +106,8 @@ const filteredInfo= Object.entries(data).filter(items=>!excludedKeys.includes(it
   return (
     <div className='w-screen h-screen bg-customColor flex overflow-hidden p-5 text-white'>
         <div className='absolute top right-7 '>
-                    <Link to="/user/wishlist">
+                    {/* <Link to="/user/wishlist"> */}
+                    <Link to="#">
                         <a href="# " className='hover:underline'>WishList</a>
                     </Link>
         </div>
