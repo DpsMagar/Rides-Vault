@@ -80,7 +80,7 @@ function ProductList() {
         
                 :<div className='p-3 mx-9 mt-1 h-full w-full flex flex-wrap justify-start gap-7'>
                     <div className='absolute top right-7 '>
-                         {sessionuserId ?<Link to="#">
+                         {sessionuserId ?<Link to="/user/wishlist">
                             <a href="# " className='hover:underline'>WishList</a>
                         </Link>:<Link to="/"></Link>}
                      </div>
