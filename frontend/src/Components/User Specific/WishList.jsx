@@ -16,7 +16,7 @@ const Wishlist = () => {
             const token= localStorage.getItem('token')
 
             try {
-                const response= axios.get("https://rides-vault.onrender.com/user/wishlist",{
+                const response= await axios.get("https://rides-vault.onrender.com/user/wishlist",{
                     headers:{
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
@@ -24,10 +24,9 @@ const Wishlist = () => {
 
                     }
                 })
-                console.log((await response).data);
-                setData((await response).data);
+                console.log(response.data);
+                setData(response.data);
                 
-                setData((await response).data)
             } catch (error) {
                 console.log(error);
                 
